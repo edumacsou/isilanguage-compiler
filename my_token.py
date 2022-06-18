@@ -24,6 +24,7 @@ TK_NUMBER       = 1
 TK_OPERATOR     = 2
 TK_PONCTUATION  = 3
 TK_ASSIGN       = 4
+TK_TEXT         = 5
 
 def is_digit(symbol):
     return symbol in digits
@@ -50,6 +51,12 @@ def is_valid(symbol):
     return is_letter(symbol) or is_digit(symbol) or is_symbol(symbol) or is_operator(symbol) or symbol == ' '
 
 class IsiScanner():
+    '''
+    A classe IsiScanner faz o trabalho de navegador do arquivo.
+    Ela implementa as funções para ler um próximo caracter, voltar um caracter e identificar o fim do arquivo
+    '''
+    ### !!!!!! Aparentemente é melhor colocar as funções do tipo is_**** para o Scanner, assim as chamadas do tipo:
+    ### if is_digit(file.current_char) podem ser substituidas por: if file.is_digit()
     def __init__(self, filename):
         self.pos = 0
         try:
@@ -69,9 +76,16 @@ class IsiScanner():
         self.current_char = self.content[self.pos]
 
     def is_EOF(self):
-        return self.pos == len(self.content)
+        return self.pos == len(self.content)-1
+
+    def __str__(self):
+        return self.content
 
 class Token():
+    '''
+    A classe Token  define os Tokens, que devem possuir um tipo (atribuído ao final de sua leitura) e um Texto (que é incrementado durante sua leitura)
+    A classe implementa os métodos que possibilitam a definição do tipo e do texto do token e a adição de um novo caracter ao Token.
+    '''
     tk_text = ''
     tk_type = ''
     def set_text(self, text):
@@ -81,8 +95,11 @@ class Token():
     def get_text(self):
         return self.tk_text
 
+    def append_char(self, char):
+        self.tk_text = self.tk_text + char
+
     def get_type(self):
         return self.tk_type
 
     def __str__(self):
-        return f'[Token Type = {tk_type}, Text = {tk.text}]'
+        return f'[Token Type = {self.tk_type}, Text = {self.tk_text}]'
