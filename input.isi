@@ -1,4 +1,4 @@
-programa
+programa 
 
 declare a,b,c,d.
 escreva("programa Teste").
@@ -14,6 +14,10 @@ se (a<b) entao
 {
   c := a - b.
 }
+
+c := 321
+
+c:= 12.13
 
 escreva ("C e igual a ").
 escreva (c).

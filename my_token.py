@@ -4,13 +4,13 @@ import traceback
 import os
 import sys
 
-digits = list(range(0,10))
+digits = [x for x in '0123456789']
 low_keys = [x for x in 'abcdefghijklmnopqrstuvwxyz']
 up_keys = [x for x in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']
-valid_symbols = [x for x in "+-*/(){}'.,"]
+valid_symbols = [x for x in "+-*/(){}'.<>:="]
 reservadas = {
     "programa"  : '',
-    "fimprog."  : '',
+    "fimprog"  : '',
     "declare"   : '',
     "leia"      : '',
     "escreva"   : '',
@@ -19,12 +19,18 @@ reservadas = {
     "senao"     : '',
 }
 
-TK_IDENTIFIER   = 0
-TK_NUMBER       = 1
-TK_OPERATOR     = 2
-TK_PONCTUATION  = 3
-TK_ASSIGN       = 4
-TK_TEXT         = 5
+TK_IDENTIFIER    = 0
+TK_NUMBER        = 1
+TK_OPERATOR      = 2
+TK_PONCTUATION   = 3
+TK_ASSIGN        = 4
+TK_TEXT          = 5
+TK_NUMBER_INT    = 6
+TK_NUMBER_DOUBLE = 7
+TK_SEPARATOR     = 8
+TK_APAR          = 9
+TK_FPAR          = 10
+TK_RESERVED_ID   = 11
 
 def is_digit(symbol):
     return symbol in digits
@@ -49,6 +55,27 @@ def is_operator(symbol):
 
 def is_valid(symbol):
     return is_letter(symbol) or is_digit(symbol) or is_symbol(symbol) or is_operator(symbol) or symbol == ' '
+
+def is_dot_operator(symbol):
+    return symbol == '.'
+
+def is_separator(symbol):
+    return symbol == ','
+
+def is_apar(symbol):
+    return symbol == '('
+
+def is_fpar(symbol):
+    return symbol == ')'
+
+def is_reserved(symbol):
+
+    try:
+        check = reservadas[symbol]
+    except KeyError:
+        check = None
+
+    return check is not None
 
 class IsiScanner():
     '''
