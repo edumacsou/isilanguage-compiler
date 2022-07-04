@@ -73,21 +73,21 @@ def main():
                     term = Token()
                     continue
                 
-                if is_apar(file.current_char):
+                if is_opar(file.current_char):
                     term.append_char(file.current_char)
                     file.next_char()
                     state = 0
-                    term.set_type(TK_APAR)
+                    term.set_type(TK_OPAR)
                     tokens.append(term)
                     print(term)
                     term = Token()
                     continue
                 
-                if is_fpar(file.current_char):
+                if is_cpar(file.current_char):
                     term.append_char(file.current_char)
                     file.next_char()
                     state = 0
-                    term.set_type(TK_FPAR)
+                    term.set_type(TK_CPAR)
                     tokens.append(term)
                     print(term)
                     term = Token()
@@ -104,7 +104,84 @@ def main():
 
                     continue
 
+                if is_okey(file.current_char):
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    state = 0
+                    term.set_type(TK_OKEY)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+
+                    continue
+
+                if is_ckey(file.current_char):
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    state = 0
+                    term.set_type(TK_CKEY)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+
+                    continue
+
+                if is_add_op(file.current_char):           #TODO: se houver ++, +=, sera necessario implementar um novo estado
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    state = 0
+                    term.set_type(TK_ADD_OP)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+
+                    continue
+
+                if is_minus_op(file.current_char):         #TODO: oq fazer quando o usuario digitar um número negativo? Talvez seja necessario implementar um estado caso tenha --
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    state = 0
+                    term.set_type(TK_MINUS_OP)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+
+                    continue
+
+                if is_mul_op(file.current_char):           #TODO: se houver **, *=, sera necessario implementar um novo estado
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    state = 0
+                    term.set_type(TK_MUL_OP)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+
+                    continue
+
+                if is_div_op(file.current_char):            #TODO: se houver //, /=, sera necessario implementar um novo estado
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    state = 0
+                    term.set_type(TK_DIV_OP)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+
+                    continue
+
+
+
+
+
                 # Tratamento de estados nao finais
+
+                if file.current_char == ':':
+                    state = 5
+                    term.append_char(file.current_char)
+                    file.next_char()
+                    continue
+
                 if is_symbol(file.current_char) and (not is_dot_operator(file.current_char)):
                     state = 2
                     term.append_char(file.current_char)
@@ -206,7 +283,7 @@ def main():
 
                     if term.get_type() == '':
                         term.set_type(TK_NUMBER_INT)
-                        
+
                     tokens.append(term)
                     print(term)
                     term = Token()
@@ -216,6 +293,20 @@ def main():
                 else:
                     # Alterar aqui para lançar o erro Exception - Invalid number!
                     print("Exception - Invalid number!")
+
+            case 5:
+                # O estado 5 indica que iniciamos a leitura de um operador de atribuição :=
+
+                if file.current_char == '=':
+                    term.append_char(file.current_char)
+                    term.set_type(TK_ASSIGN)
+                    tokens.append(term)
+                    print(term)
+                    term = Token()
+                    file.next_char()
+                    state = 0
+                    continue
+
 
 
 if __name__ == '__main__':

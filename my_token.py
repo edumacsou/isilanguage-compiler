@@ -22,15 +22,23 @@ reservadas = {
 TK_IDENTIFIER    = 0
 TK_NUMBER        = 1
 TK_OPERATOR      = 2
-TK_PONCTUATION   = 3
-TK_ASSIGN        = 4
+TK_PONCTUATION   = 3    # Tk terminador de linha (' . ')
+TK_ASSIGN        = 4    # Tk operador de atribuiçao :=
 TK_TEXT          = 5
 TK_NUMBER_INT    = 6
 TK_NUMBER_DOUBLE = 7
-TK_SEPARATOR     = 8
-TK_APAR          = 9
-TK_FPAR          = 10
-TK_RESERVED_ID   = 11
+TK_SEPARATOR     = 8    # Tk de virgula
+TK_OPAR          = 9    # Tk abre parenteses
+TK_CPAR          = 10   # Tk fecha parenteses
+TK_RESERVED_ID   = 11   # Tk identificadores reservados  
+TK_OKEY          = 12   # Tk abre chaves
+TK_CKEY          = 13   # Tk fecha chaves
+TK_ADD_OP        = 14
+TK_MINUS_OP      = 15
+TK_MUL_OP        = 16
+TK_DIV_OP        = 17
+
+
 
 def is_digit(symbol):
     return symbol in digits
@@ -62,11 +70,29 @@ def is_dot_operator(symbol):
 def is_separator(symbol):
     return symbol == ','
 
-def is_apar(symbol):
+def is_opar(symbol):
     return symbol == '('
 
-def is_fpar(symbol):
+def is_cpar(symbol):
     return symbol == ')'
+
+def is_okey(symbol):
+    return symbol == '{'
+
+def is_ckey(symbol):
+    return symbol == '}'
+
+def is_add_op(symbol):
+    return symbol == '+'
+
+def is_minus_op(symbol):
+    return symbol == '-'
+
+def is_mul_op(symbol):
+    return symbol == '*'
+
+def is_div_op(symbol):
+    return symbol == '/'
 
 def is_reserved(symbol):
 
