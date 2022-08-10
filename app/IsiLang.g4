@@ -23,10 +23,10 @@ bloco	:
 		;
 
 
-cmd		:  cmdleitura
- 		|  cmdescrita
- 		|  cmdattrib
- 		|  cmdselecao
+cmd		:  cmdleitura {print("Reconhecido comando de leitura!")    }
+ 		|  cmdescrita {print("Reconhecido comando de escrita!")    }
+ 		|  cmdattrib  {print("Reconhecido comando de atribuicao!") }
+ 		|  cmdselecao {print("Reconhecido comando de selecao!")    }
 		;
 
 cmdleitura	: 'leia' AP
