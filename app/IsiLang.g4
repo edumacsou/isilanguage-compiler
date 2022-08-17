@@ -1,6 +1,14 @@
 grammar IsiLang;
 
-prog	: 'programa' decl bloco  'fimprog;'
+prog	: 'programa' decl {
+import os
+## __file is inside app/src/parser, the root folder of the project will be app/
+ROOT_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), '../../'))
+import sys
+sys.path.append(ROOT_PATH)
+from src.parser.Singleton import Singleton
+Singleton()} bloco  'fimprog;'
+
       ;
 
 decl    :  (declaravar)+
