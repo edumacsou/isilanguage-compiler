@@ -15,15 +15,15 @@ decl    :  (declaravar)+
         ;
 
 
-        declaravar :  tipo ID {print(self._ctx.getChild(-1))}
-              (  VIR
-              	 ID {print(self._ctx.getChild(-1))}
-              )*
-               SC
+        declaravar :  tipo ID          {print(self._ctx.getChild(-1))}
+                           (  VIR
+                         	ID       {print(self._ctx.getChild(-1))}
+                           )*
+                           SC
            ;
 
-tipo       : 'numero'
-           | 'texto'
+tipo       : 'numero' {print("Tipo Numero")}
+           | 'texto'  {print("Tipo Texto") }
            ;
 
 bloco	:
@@ -38,9 +38,9 @@ cmd		:  cmdleitura {print("Reconhecido comando de leitura!")    }
 		;
 
 cmdleitura	: 'leia' AP
-                     ID
-                     FP
-                     SC
+                        ID {print("ID = " + str(self._ctx.getChild(-1)))}
+                        FP
+                        SC
 			;
 
 cmdescrita	: 'escreva'
