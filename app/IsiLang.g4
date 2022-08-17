@@ -1,15 +1,15 @@
 grammar IsiLang;
 
 prog	: 'programa' decl bloco  'fimprog;'
-		;
+      ;
 
 decl    :  (declaravar)+
         ;
 
 
-declaravar :  tipo ID
+        declaravar :  tipo ID {print(self._ctx.getChild(-1))}
               (  VIR
-              	 ID
+              	 ID {print(self._ctx.getChild(-1))}
               )*
                SC
            ;
