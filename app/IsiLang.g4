@@ -11,8 +11,11 @@ import isiSymbolTable
 
 @members{
 
-global _tipo
-_tipo = 0
+def setTipo(self, tipo):
+  self._tipo = tipo
+def getTipo(self):
+  return self._tipo
+
 global _varName
 _varName = ""
 global _varValue
@@ -23,14 +26,7 @@ symbolTable = isiSymbolTable.IsiSymbolTable()
 
 }
 
-prog	: 'programa' decl {
-import os
-## __file is inside app/src/parser, the root folder of the project will be app/
-ROOT_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), '../../'))
-import sys
-sys.path.append(ROOT_PATH)
-from src.parser.Singleton import Singleton
-Singleton()} bloco  'fimprog;'
+prog	: 'programa' decl bloco  'fimprog;'
 
       ;
 
@@ -38,21 +34,20 @@ decl    :  (declaravar)+
         ;
 
 
-declaravar :  tipo ID       {
-print("ID lido: {}, do tipo {}".format(self._ctx.getChild(-1), _tipo))
+declaravar :  tipo ID {
+print("ID lido: {}, do tipo {}".format(self._ctx.getChild(-1), self.getTipo()))
 _varName = self._ctx.getChild(-1)
 _varValue = None
-symbol = isiVariable.IsiVariable(_varName, _tipo, _varValue)
+symbol = isiVariable.IsiVariable(_varName, self.getTipo(), _varValue)
 print("Simbolo adcionado {}".format(symbol.toString()))
 symbolTable.add(symbol)
-
-}
+                    }
                     (  VIR
                        ID   {
 print(self._ctx.getChild(-1))
 _varName = self._ctx.getChild(-1)
 _varValue = None
-symbol = isiVariable.IsiVariable(_varName, _tipo, _varValue)
+symbol = isiVariable.IsiVariable(_varName, self.getTipo(), _varValue)
 print("Simbolo adcionado {}".format(symbol.toString()))
 symbolTable.add(symbol)
 }
@@ -60,10 +55,14 @@ symbolTable.add(symbol)
                     SC
            ;
 
-tipo       : 'numero' {_tipo = 0 #isiVariable.IsiVariable.NUMBER
-print("tipo lido: {}".format(_tipo)) }
-           | 'texto'  {_tipo = 1 #isiVariable.IsiVariable.TEXT
-print("tipo lido: {}".format(_tipo))   }
+           tipo       : 'numero' {
+self.setTipo(0) #isiVariable.IsiVariable.NUMBER
+print("tipo lido: {}".format(self.getTipo())) 
+                    }
+                    | 'texto'  {
+self.setTipo(1) #isiVariable.IsiVariable.TEXT
+print("tipo lido: {}".format(self.getTipo()))
+                    }
            ;
 
 bloco	:

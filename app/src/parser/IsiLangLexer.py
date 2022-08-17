@@ -126,8 +126,11 @@ class IsiLangLexer(Lexer):
 
 
 
-    global _tipo
-    _tipo = 0
+    def setTipo(self, tipo):
+      self._tipo = tipo
+    def getTipo(self):
+      return self._tipo
+
     global _varName
     _varName = ""
     global _varValue
