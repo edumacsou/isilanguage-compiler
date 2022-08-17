@@ -5,7 +5,7 @@
 class IsiSymbol:
     
     def __init__(self, nome):
-        self.nome = nome
+        self.name = nome
 
     def getName(self):
         self.name

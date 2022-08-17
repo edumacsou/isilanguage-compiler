@@ -4,6 +4,14 @@ if __name__ is not None and "." in __name__:
     from .IsiLangParser import IsiLangParser
 else:
     from IsiLangParser import IsiLangParser
+ 
+
+import isiExceptions
+import isiSymbol
+import isiVariable
+import isiSymbolTable
+
+
 
 # This class defines a complete listener for a parse tree produced by IsiLangParser.
 class IsiLangListener(ParseTreeListener):

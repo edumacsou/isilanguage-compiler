@@ -4,6 +4,14 @@ from io import StringIO
 from typing.io import TextIO
 import sys
 
+ 
+
+import isiExceptions
+import isiSymbol
+import isiVariable
+import isiSymbolTable
+
+
 
 
 def serializedATN():
@@ -115,5 +123,18 @@ class IsiLangLexer(Lexer):
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None
+
+
+
+    global _tipo
+    _tipo = 0
+    global _varName
+    _varName = ""
+    global _varValue
+    _varValue = ""
+
+    global symbolTable
+    symbolTable = isiSymbolTable.IsiSymbolTable()
+
 
 
