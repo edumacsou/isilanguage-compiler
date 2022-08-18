@@ -70,10 +70,6 @@ cmd		:  cmdleitura {print("Reconhecido comando de leitura!")    }
 
 cmdleitura	: 'leia' AP
                         ID {
-print("ID = " + str(self._ctx.getChild(-1)))
-print("Dict de simbolos no momento do comando leia:")
-print(self._symbolTable)
-print("lendo e inserindo no simbolo: {}".format(self._symbolTable._hashTable.get(str(self._ctx.getChild(-1)))))
 if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
      raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
 
