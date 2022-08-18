@@ -7,9 +7,9 @@ import sys
  
 
 import isiExceptions
-import isiSymbol
-import isiVariable
-import isiSymbolTable
+from isiSymbol import IsiSymbol
+from isiVariable import IsiVariable
+from isiSymbolTable import IsiSymbolTable
 
 
 
@@ -130,14 +130,5 @@ class IsiLangLexer(Lexer):
       self._tipo = tipo
     def getTipo(self):
       return self._tipo
-
-    global _varName
-    _varName = ""
-    global _varValue
-    _varValue = ""
-
-    global symbolTable
-    symbolTable = isiSymbolTable.IsiSymbolTable()
-
 
 

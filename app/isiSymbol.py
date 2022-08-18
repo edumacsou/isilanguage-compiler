@@ -13,6 +13,6 @@ class IsiSymbol:
     def setName(self, newname):
         self.name = newname
 
-    def toString(self):
-        return "IsiSymbol [name = " + self.name + " ]"
+    def __str__(self):
+        return f"IsiSymbol [name = {self.name} ]"
 

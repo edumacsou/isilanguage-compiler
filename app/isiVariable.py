@@ -1,15 +1,16 @@
-import isiSymbol
+from isiSymbol import IsiSymbol
 
 
-class IsiVariable(isiSymbol.IsiSymbol):
+class IsiVariable(IsiSymbol):
 
     NUMBER = 0
     TEXT = 1
 
-    def __init__(self, name, type, value):
+    def __init__(self, name, type, value, used):
         super().setName(name)
         self.type = type
         self.value = value
+        self.used = False
 
     def getType(self):
         self.type
@@ -23,8 +24,14 @@ class IsiVariable(isiSymbol.IsiSymbol):
     def setValue(self, value):
         self.value = value
 
-    def toString(self):
-        return "IsiVariable [name = {}, type = {}, value = {}]".format(self.name, self.type, self.value)
+    def setUsed(self, used):
+        self.used = used
+
+    def getUsed(self):
+        return self.used
+
+    def __str__(self):
+        return "IsiVariable [name = {}, type = {}, value = {}, used = {}]".format(self.name, self.type, self.value, self.used)
 
 
     # avaliar se isso faz sentido, dado que em python nao declaramos tipos?

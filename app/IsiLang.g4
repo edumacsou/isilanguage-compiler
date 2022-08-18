@@ -3,9 +3,9 @@ grammar IsiLang;
 @header{ 
 
 import isiExceptions
-import isiSymbol
-import isiVariable
-import isiSymbolTable
+from isiSymbol import IsiSymbol
+from isiVariable import IsiVariable
+from isiSymbolTable import IsiSymbolTable
 
 }
 
@@ -15,19 +15,9 @@ def setTipo(self, tipo):
   self._tipo = tipo
 def getTipo(self):
   return self._tipo
-
-global _varName
-_varName = ""
-global _varValue
-_varValue = ""
-
-global symbolTable
-symbolTable = isiSymbolTable.IsiSymbolTable()
-
 }
 
-prog	: 'programa' decl bloco  'fimprog;'
-
+prog	: {self._symbolTable = IsiSymbolTable()}'programa' decl bloco  'fimprog;'
       ;
 
 decl    :  (declaravar)+
@@ -35,21 +25,15 @@ decl    :  (declaravar)+
 
 
 declaravar :  tipo ID {
-print("ID lido: {}, do tipo {}".format(self._ctx.getChild(-1), self.getTipo()))
-_varName = self._ctx.getChild(-1)
-_varValue = None
-symbol = isiVariable.IsiVariable(_varName, self.getTipo(), _varValue)
-print("Simbolo adcionado {}".format(symbol.toString()))
-symbolTable.add(symbol)
+symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
+print("Simbolo adicionado", symbol)
+self._symbolTable.add(symbol)
                     }
                     (  VIR
                        ID   {
-print(self._ctx.getChild(-1))
-_varName = self._ctx.getChild(-1)
-_varValue = None
-symbol = isiVariable.IsiVariable(_varName, self.getTipo(), _varValue)
-print("Simbolo adcionado {}".format(symbol.toString()))
-symbolTable.add(symbol)
+symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
+print("Simbolo adicionado", symbol)
+self._symbolTable.add(symbol)
 }
                     )*
                     SC

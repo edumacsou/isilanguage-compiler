@@ -1,0 +1,8 @@
+def main():
+#  {prog
+#  ...
+#  fimprog.}
+
+if __name__ == '__main__':  
+  ## Programa compilado pelo IsiLanguage Compiler
+  main()

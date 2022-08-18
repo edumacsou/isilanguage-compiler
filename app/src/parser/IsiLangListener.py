@@ -7,9 +7,9 @@ else:
  
 
 import isiExceptions
-import isiSymbol
-import isiVariable
-import isiSymbolTable
+from isiSymbol import IsiSymbol
+from isiVariable import IsiVariable
+from isiSymbolTable import IsiSymbolTable
 
 
 
