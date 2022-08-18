@@ -66,6 +66,7 @@ cmd		:  cmdleitura {print("Reconhecido comando de leitura!")    }
  		|  cmdescrita {print("Reconhecido comando de escrita!")    }
  		|  cmdattrib  {print("Reconhecido comando de atribuicao!") }
  		|  cmdselecao {print("Reconhecido comando de selecao!")    }
+ 		|  cmdenquanto    {print("Reconhecido comando de enquanto!")    }
 		;
 
 cmdleitura	: 'leia' AP
@@ -120,6 +121,25 @@ if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
                    	FCH
                    )?
             ;
+
+cmdenquanto    : 'enquanto' AP
+                            ID{
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
+
+}
+                    OPREL
+                    (ID {
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
+
+} | NUMBER)
+                    FP
+                    ACH
+                    (cmd)+
+                    FCH
+               ;
+
 
 expr		:  termo (
 	             OP
