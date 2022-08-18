@@ -6,23 +6,26 @@ from isiVariable import IsiVariable
 class IsiSymbolTable:
 
     def __init__(self):
-        self.map = {}
+        self._hashTable = {}
 
     def add(self, symbol: IsiVariable):
-        self.map[symbol.getName()] = symbol
+        self._hashTable[symbol.getName()] = symbol
     
     def exists(self, symbolname: str):
-        return symbolname in self.map.keys()
+        #return symbolname in self._hashTable.keys()
+        return (self._hashTable.get(symbolname, None) != None)
 
-    def get(self, keyname: str):
-        #return self.map.get(keyname)
-        try:
-            return self.map[keyname]
-        except:
-            return None
+#    def get(self, keyname: str):
+#        #return self._hashTable.get(keyname)
+#        try:
+#            return self._hashTable[keyname]
+#        except:
+#            return None
 
-    def print(self):
-        for k in self.map.keys():
-            print("Dict[{}] = {}".format(k, self.map[k]))
+    def __str__(self):
+        text=[]
+        for k in self._hashTable.keys():
+            text.append("Dict[{}] = {}\n".format(k, self._hashTable[k]))
+        return "".join(text)
 
     

@@ -31,17 +31,17 @@ if(self._symbolTable.exists(str(symbol.getName())) == False):
      print("Simbolo adicionado", symbol)
      self._symbolTable.add(symbol)
 else:
-     raise isiExceptions.IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
+     raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
                     }
                     (  VIR
                        ID   {
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
-
+print(self._symbolTable._hashTable.keys())
 if(self._symbolTable.exists(str(symbol.getName())) == False):
      print("Simbolo adicionado", symbol)
      self._symbolTable.add(symbol)
 else:
-     raise isiExceptions.IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
+     raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 }
                     )*
                     SC
@@ -71,12 +71,11 @@ cmd		:  cmdleitura {print("Reconhecido comando de leitura!")    }
 cmdleitura	: 'leia' AP
                         ID {
 print("ID = " + str(self._ctx.getChild(-1)))
-print("ID = " + str(self._ctx.getChild(-1)))
 print("Dict de simbolos no momento do comando leia:")
-self._symbolTable.print()
-print("lendo e inserindo no simbolo: {}".format(self._symbolTable.get(str(self._ctx.getChild(-1)))))
-if (self._symbolTable.exists(self._ctx.getChild(-1)) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel {} nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
+print(self._symbolTable)
+print("lendo e inserindo no simbolo: {}".format(self._symbolTable._hashTable.get(str(self._ctx.getChild(-1)))))
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
 
 }
                         FP
