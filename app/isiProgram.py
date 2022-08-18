@@ -14,12 +14,16 @@ class ReadCommand(AbstractCommand):
     def __init__(self, id: str):
         self._identificador = id
 
+    def __str__(self):
+        return "Read Command[value = {}]\n".format(self._identificador)
 
 class WriteCommand(AbstractCommand):
 
     def __init__(self, id: str):
         self._identificador = id
 
+    def __str__(self):
+        return "Write Command[value = {}]\n".format(self._identificador)
 
 class IsiProgram():
 
@@ -48,6 +52,11 @@ class IsiProgram():
         self._name = name
 
 
+    def __str__(self):
+        programa = []
+        for x in self._comandos:
+            programa.append("Comando = {}\n".format(x))
+        return "".join(programa)
 
     def generateTarget():
         pass

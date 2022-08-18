@@ -15,6 +15,8 @@ def main():
     tree = parser.prog()
     print(tree.toStringTree(recog=parser))
 
+    print(parser._isiProgram)
+
 
 if __name__ == '__main__':
     main()
