@@ -6,6 +6,7 @@ from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
+from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand
 
 }
 
@@ -17,7 +18,22 @@ def getTipo(self):
   return self._tipo
 }
 
-prog	: {self._symbolTable = IsiSymbolTable()}'programa' decl bloco  'fimprog;'
+prog	: 
+{
+# comandos em python executados antes do inicio do programa
+self._symbolTable = IsiSymbolTable()
+self._isiProgram = IsiProgram()
+self._readIDCommand = None
+self._curThread = []
+self._exprID = None
+self._exprContent = None
+}
+    'programa' decl bloco  'fimprog;'
+{
+# comandos em python executados no fim do programa
+
+self._isiProgram.setCommands(self._curThread)
+}
       ;
 
 decl    :  (declaravar)+
@@ -28,7 +44,7 @@ declaravar :  tipo ID {
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
 if(self._symbolTable.exists(str(symbol.getName())) == False):
-     print("Simbolo adicionado", symbol)
+     #print("Simbolo adicionado", symbol)
      self._symbolTable.add(symbol)
 else:
      raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
@@ -36,9 +52,9 @@ else:
                     (  VIR
                        ID   {
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
-print(self._symbolTable._hashTable.keys())
+
 if(self._symbolTable.exists(str(symbol.getName())) == False):
-     print("Simbolo adicionado", symbol)
+     #print("Simbolo adicionado", symbol)
      self._symbolTable.add(symbol)
 else:
      raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
@@ -73,10 +89,15 @@ cmdleitura	: 'leia' AP
                         ID {
 if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
      raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
-
+else:
+     self._readIDCommand = str(self._ctx.getChild(-1))
 }
                         FP
                         SC
+{
+cmd = ReadCommand(self._readIDCommand)
+self._curThread.append(cmd)
+}
 			;
 
 cmdescrita	: 'escreva'
@@ -85,10 +106,15 @@ cmdescrita	: 'escreva'
                  {
 if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
      raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando imprimir ela!".format(self._ctx.getChild(-1)))
-
+else:
+     self._readIDCommand = str(self._ctx.getChild(-1))
 }
                  FP
                  SC
+{
+cmd = WriteCommand(self._readIDCommand)
+self._curThread.append(cmd)
+}
 			;
 
 cmdattrib	:  ID

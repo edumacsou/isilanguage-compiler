@@ -5,6 +5,7 @@ from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
+from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand
 
 
 import org.antlr.v4.runtime.atn.*;
@@ -129,7 +130,15 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
+
+			# comandos em python executados antes do inicio do programa
 			self._symbolTable = IsiSymbolTable()
+			self._isiProgram = IsiProgram()
+			self._readIDCommand = None
+			self._curThread = []
+			self._exprID = None
+			self._exprContent = None
+
 			setState(25);
 			match(T__0);
 			setState(26);
@@ -138,6 +147,11 @@ public class IsiLangParser extends Parser {
 			bloco();
 			setState(28);
 			match(T__1);
+
+			# comandos em python executados no fim do programa
+
+			self._isiProgram.setCommands(self._curThread)
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -171,17 +185,17 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(31); 
+			setState(32); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(30);
+				setState(31);
 				declaravar();
 				}
 				}
-				setState(33); 
+				setState(34); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==T__2 || _la==T__3 );
@@ -224,45 +238,45 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35);
-			tipo();
 			setState(36);
+			tipo();
+			setState(37);
 			match(ID);
 
 			symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
 			if(self._symbolTable.exists(str(symbol.getName())) == False):
-			     print("Simbolo adicionado", symbol)
+			     #print("Simbolo adicionado", symbol)
 			     self._symbolTable.add(symbol)
 			else:
 			     raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 			                    
-			setState(43);
+			setState(44);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==VIR) {
 				{
 				{
-				setState(38);
-				match(VIR);
 				setState(39);
+				match(VIR);
+				setState(40);
 				match(ID);
 
 				symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
-				print(self._symbolTable._hashTable.keys())
+
 				if(self._symbolTable.exists(str(symbol.getName())) == False):
-				     print("Simbolo adicionado", symbol)
+				     #print("Simbolo adicionado", symbol)
 				     self._symbolTable.add(symbol)
 				else:
 				     raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 
 				}
 				}
-				setState(45);
+				setState(46);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(46);
+			setState(47);
 			match(SC);
 			}
 		}
@@ -288,13 +302,13 @@ public class IsiLangParser extends Parser {
 		TipoContext _localctx = new TipoContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_tipo);
 		try {
-			setState(52);
+			setState(53);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__2:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(48);
+				setState(49);
 				match(T__2);
 
 				self.setTipo(IsiVariable.NUMBER)
@@ -305,7 +319,7 @@ public class IsiLangParser extends Parser {
 			case T__3:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(50);
+				setState(51);
 				match(T__3);
 
 				self.setTipo(IsiVariable.TEXT)
@@ -348,17 +362,17 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(55); 
+			setState(56); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(54);
+				setState(55);
 				cmd();
 				}
 				}
-				setState(57); 
+				setState(58); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << ID))) != 0) );
@@ -398,13 +412,13 @@ public class IsiLangParser extends Parser {
 		CmdContext _localctx = new CmdContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_cmd);
 		try {
-			setState(71);
+			setState(72);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__4:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(59);
+				setState(60);
 				cmdleitura();
 				print("Reconhecido comando de leitura!")    
 				}
@@ -412,7 +426,7 @@ public class IsiLangParser extends Parser {
 			case T__5:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(62);
+				setState(63);
 				cmdescrita();
 				print("Reconhecido comando de escrita!")    
 				}
@@ -420,7 +434,7 @@ public class IsiLangParser extends Parser {
 			case ID:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(65);
+				setState(66);
 				cmdattrib();
 				print("Reconhecido comando de atribuicao!") 
 				}
@@ -428,7 +442,7 @@ public class IsiLangParser extends Parser {
 			case T__6:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(68);
+				setState(69);
 				cmdselecao();
 				print("Reconhecido comando de selecao!")    
 				}
@@ -465,21 +479,26 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73);
-			match(T__4);
 			setState(74);
-			match(AP);
+			match(T__4);
 			setState(75);
+			match(AP);
+			setState(76);
 			match(ID);
 
 			if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
 			     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
+			else:
+			     self._readIDCommand = str(self._ctx.getChild(-1))
 
-
-			setState(77);
-			match(FP);
 			setState(78);
+			match(FP);
+			setState(79);
 			match(SC);
+
+			cmd = ReadCommand(self._readIDCommand)
+			self._curThread.append(cmd)
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -510,21 +529,26 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(80);
-			match(T__5);
-			setState(81);
-			match(AP);
 			setState(82);
+			match(T__5);
+			setState(83);
+			match(AP);
+			setState(84);
 			match(ID);
 
 			if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
 			     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando imprimir ela!".format(self._ctx.getChild(-1)))
+			else:
+			     self._readIDCommand = str(self._ctx.getChild(-1))
 
-
-			setState(84);
+			setState(86);
 			match(FP);
-			setState(85);
+			setState(87);
 			match(SC);
+
+			cmd = WriteCommand(self._readIDCommand)
+			self._curThread.append(cmd)
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -557,13 +581,13 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(87);
-			match(ID);
-			setState(88);
-			match(ATTR);
-			setState(89);
-			expr();
 			setState(90);
+			match(ID);
+			setState(91);
+			match(ATTR);
+			setState(92);
+			expr();
+			setState(93);
 			match(SC);
 			}
 		}
@@ -614,25 +638,25 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(92);
+			setState(95);
 			match(T__6);
-			setState(93);
+			setState(96);
 			match(AP);
-			setState(94);
+			setState(97);
 			match(ID);
 
 			if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
 			     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
 
 
-			setState(96);
+			setState(99);
 			match(OPREL);
-			setState(100);
+			setState(103);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ID:
 				{
-				setState(97);
+				setState(100);
 				match(ID);
 
 				if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
@@ -643,59 +667,59 @@ public class IsiLangParser extends Parser {
 				break;
 			case NUMBER:
 				{
-				setState(99);
+				setState(102);
 				match(NUMBER);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(102);
+			setState(105);
 			match(FP);
-			setState(103);
+			setState(106);
 			match(ACH);
-			setState(105); 
+			setState(108); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(104);
+				setState(107);
 				cmd();
 				}
 				}
-				setState(107); 
+				setState(110); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << ID))) != 0) );
-			setState(109);
+			setState(112);
 			match(FCH);
-			setState(119);
+			setState(122);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__7) {
 				{
-				setState(110);
+				setState(113);
 				match(T__7);
-				setState(111);
+				setState(114);
 				match(ACH);
 				{
-				setState(113); 
+				setState(116); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(112);
+					setState(115);
 					cmd();
 					}
 					}
-					setState(115); 
+					setState(118); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << ID))) != 0) );
 				}
-				setState(117);
+				setState(120);
 				match(FCH);
 				}
 			}
@@ -737,21 +761,21 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(121);
+			setState(124);
 			termo();
-			setState(126);
+			setState(129);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==OP) {
 				{
 				{
-				setState(122);
+				setState(125);
 				match(OP);
-				setState(123);
+				setState(126);
 				termo();
 				}
 				}
-				setState(128);
+				setState(131);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -781,13 +805,13 @@ public class IsiLangParser extends Parser {
 		TermoContext _localctx = new TermoContext(_ctx, getState());
 		enterRule(_localctx, 22, RULE_termo);
 		try {
-			setState(132);
+			setState(135);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(129);
+				setState(132);
 				match(ID);
 
 				if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
@@ -799,7 +823,7 @@ public class IsiLangParser extends Parser {
 			case NUMBER:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(131);
+				setState(134);
 				match(NUMBER);
 				}
 				break;
@@ -819,40 +843,41 @@ public class IsiLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\26\u0089\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\26\u008c\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
-		"\t\13\4\f\t\f\4\r\t\r\3\2\3\2\3\2\3\2\3\2\3\2\3\3\6\3\"\n\3\r\3\16\3#"+
-		"\3\4\3\4\3\4\3\4\3\4\3\4\7\4,\n\4\f\4\16\4/\13\4\3\4\3\4\3\5\3\5\3\5\3"+
-		"\5\5\5\67\n\5\3\6\6\6:\n\6\r\6\16\6;\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
-		"\7\3\7\3\7\3\7\5\7J\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
-		"\5\13g\n\13\3\13\3\13\3\13\6\13l\n\13\r\13\16\13m\3\13\3\13\3\13\3\13"+
-		"\6\13t\n\13\r\13\16\13u\3\13\3\13\5\13z\n\13\3\f\3\f\3\f\7\f\177\n\f\f"+
-		"\f\16\f\u0082\13\f\3\r\3\r\3\r\5\r\u0087\n\r\3\r\2\2\16\2\4\6\b\n\f\16"+
-		"\20\22\24\26\30\2\2\2\u0089\2\32\3\2\2\2\4!\3\2\2\2\6%\3\2\2\2\b\66\3"+
-		"\2\2\2\n9\3\2\2\2\fI\3\2\2\2\16K\3\2\2\2\20R\3\2\2\2\22Y\3\2\2\2\24^\3"+
-		"\2\2\2\26{\3\2\2\2\30\u0086\3\2\2\2\32\33\b\2\1\2\33\34\7\3\2\2\34\35"+
-		"\5\4\3\2\35\36\5\n\6\2\36\37\7\4\2\2\37\3\3\2\2\2 \"\5\6\4\2! \3\2\2\2"+
-		"\"#\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\5\3\2\2\2%&\5\b\5\2&\'\7\24\2\2\'-\b"+
-		"\4\1\2()\7\20\2\2)*\7\24\2\2*,\b\4\1\2+(\3\2\2\2,/\3\2\2\2-+\3\2\2\2-"+
-		".\3\2\2\2.\60\3\2\2\2/-\3\2\2\2\60\61\7\r\2\2\61\7\3\2\2\2\62\63\7\5\2"+
-		"\2\63\67\b\5\1\2\64\65\7\6\2\2\65\67\b\5\1\2\66\62\3\2\2\2\66\64\3\2\2"+
-		"\2\67\t\3\2\2\28:\5\f\7\298\3\2\2\2:;\3\2\2\2;9\3\2\2\2;<\3\2\2\2<\13"+
-		"\3\2\2\2=>\5\16\b\2>?\b\7\1\2?J\3\2\2\2@A\5\20\t\2AB\b\7\1\2BJ\3\2\2\2"+
-		"CD\5\22\n\2DE\b\7\1\2EJ\3\2\2\2FG\5\24\13\2GH\b\7\1\2HJ\3\2\2\2I=\3\2"+
-		"\2\2I@\3\2\2\2IC\3\2\2\2IF\3\2\2\2J\r\3\2\2\2KL\7\7\2\2LM\7\13\2\2MN\7"+
-		"\24\2\2NO\b\b\1\2OP\7\f\2\2PQ\7\r\2\2Q\17\3\2\2\2RS\7\b\2\2ST\7\13\2\2"+
-		"TU\7\24\2\2UV\b\t\1\2VW\7\f\2\2WX\7\r\2\2X\21\3\2\2\2YZ\7\24\2\2Z[\7\17"+
-		"\2\2[\\\5\26\f\2\\]\7\r\2\2]\23\3\2\2\2^_\7\t\2\2_`\7\13\2\2`a\7\24\2"+
-		"\2ab\b\13\1\2bf\7\23\2\2cd\7\24\2\2dg\b\13\1\2eg\7\25\2\2fc\3\2\2\2fe"+
-		"\3\2\2\2gh\3\2\2\2hi\7\f\2\2ik\7\21\2\2jl\5\f\7\2kj\3\2\2\2lm\3\2\2\2"+
-		"mk\3\2\2\2mn\3\2\2\2no\3\2\2\2oy\7\22\2\2pq\7\n\2\2qs\7\21\2\2rt\5\f\7"+
-		"\2sr\3\2\2\2tu\3\2\2\2us\3\2\2\2uv\3\2\2\2vw\3\2\2\2wx\7\22\2\2xz\3\2"+
-		"\2\2yp\3\2\2\2yz\3\2\2\2z\25\3\2\2\2{\u0080\5\30\r\2|}\7\16\2\2}\177\5"+
-		"\30\r\2~|\3\2\2\2\177\u0082\3\2\2\2\u0080~\3\2\2\2\u0080\u0081\3\2\2\2"+
-		"\u0081\27\3\2\2\2\u0082\u0080\3\2\2\2\u0083\u0084\7\24\2\2\u0084\u0087"+
-		"\b\r\1\2\u0085\u0087\7\25\2\2\u0086\u0083\3\2\2\2\u0086\u0085\3\2\2\2"+
-		"\u0087\31\3\2\2\2\r#-\66;Ifmuy\u0080\u0086";
+		"\t\13\4\f\t\f\4\r\t\r\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\3\6\3#\n\3\r\3\16"+
+		"\3$\3\4\3\4\3\4\3\4\3\4\3\4\7\4-\n\4\f\4\16\4\60\13\4\3\4\3\4\3\5\3\5"+
+		"\3\5\3\5\5\58\n\5\3\6\6\6;\n\6\r\6\16\6<\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3"+
+		"\7\3\7\3\7\3\7\3\7\5\7K\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3"+
+		"\13\3\13\3\13\5\13j\n\13\3\13\3\13\3\13\6\13o\n\13\r\13\16\13p\3\13\3"+
+		"\13\3\13\3\13\6\13w\n\13\r\13\16\13x\3\13\3\13\5\13}\n\13\3\f\3\f\3\f"+
+		"\7\f\u0082\n\f\f\f\16\f\u0085\13\f\3\r\3\r\3\r\5\r\u008a\n\r\3\r\2\2\16"+
+		"\2\4\6\b\n\f\16\20\22\24\26\30\2\2\2\u008c\2\32\3\2\2\2\4\"\3\2\2\2\6"+
+		"&\3\2\2\2\b\67\3\2\2\2\n:\3\2\2\2\fJ\3\2\2\2\16L\3\2\2\2\20T\3\2\2\2\22"+
+		"\\\3\2\2\2\24a\3\2\2\2\26~\3\2\2\2\30\u0089\3\2\2\2\32\33\b\2\1\2\33\34"+
+		"\7\3\2\2\34\35\5\4\3\2\35\36\5\n\6\2\36\37\7\4\2\2\37 \b\2\1\2 \3\3\2"+
+		"\2\2!#\5\6\4\2\"!\3\2\2\2#$\3\2\2\2$\"\3\2\2\2$%\3\2\2\2%\5\3\2\2\2&\'"+
+		"\5\b\5\2\'(\7\24\2\2(.\b\4\1\2)*\7\20\2\2*+\7\24\2\2+-\b\4\1\2,)\3\2\2"+
+		"\2-\60\3\2\2\2.,\3\2\2\2./\3\2\2\2/\61\3\2\2\2\60.\3\2\2\2\61\62\7\r\2"+
+		"\2\62\7\3\2\2\2\63\64\7\5\2\2\648\b\5\1\2\65\66\7\6\2\2\668\b\5\1\2\67"+
+		"\63\3\2\2\2\67\65\3\2\2\28\t\3\2\2\29;\5\f\7\2:9\3\2\2\2;<\3\2\2\2<:\3"+
+		"\2\2\2<=\3\2\2\2=\13\3\2\2\2>?\5\16\b\2?@\b\7\1\2@K\3\2\2\2AB\5\20\t\2"+
+		"BC\b\7\1\2CK\3\2\2\2DE\5\22\n\2EF\b\7\1\2FK\3\2\2\2GH\5\24\13\2HI\b\7"+
+		"\1\2IK\3\2\2\2J>\3\2\2\2JA\3\2\2\2JD\3\2\2\2JG\3\2\2\2K\r\3\2\2\2LM\7"+
+		"\7\2\2MN\7\13\2\2NO\7\24\2\2OP\b\b\1\2PQ\7\f\2\2QR\7\r\2\2RS\b\b\1\2S"+
+		"\17\3\2\2\2TU\7\b\2\2UV\7\13\2\2VW\7\24\2\2WX\b\t\1\2XY\7\f\2\2YZ\7\r"+
+		"\2\2Z[\b\t\1\2[\21\3\2\2\2\\]\7\24\2\2]^\7\17\2\2^_\5\26\f\2_`\7\r\2\2"+
+		"`\23\3\2\2\2ab\7\t\2\2bc\7\13\2\2cd\7\24\2\2de\b\13\1\2ei\7\23\2\2fg\7"+
+		"\24\2\2gj\b\13\1\2hj\7\25\2\2if\3\2\2\2ih\3\2\2\2jk\3\2\2\2kl\7\f\2\2"+
+		"ln\7\21\2\2mo\5\f\7\2nm\3\2\2\2op\3\2\2\2pn\3\2\2\2pq\3\2\2\2qr\3\2\2"+
+		"\2r|\7\22\2\2st\7\n\2\2tv\7\21\2\2uw\5\f\7\2vu\3\2\2\2wx\3\2\2\2xv\3\2"+
+		"\2\2xy\3\2\2\2yz\3\2\2\2z{\7\22\2\2{}\3\2\2\2|s\3\2\2\2|}\3\2\2\2}\25"+
+		"\3\2\2\2~\u0083\5\30\r\2\177\u0080\7\16\2\2\u0080\u0082\5\30\r\2\u0081"+
+		"\177\3\2\2\2\u0082\u0085\3\2\2\2\u0083\u0081\3\2\2\2\u0083\u0084\3\2\2"+
+		"\2\u0084\27\3\2\2\2\u0085\u0083\3\2\2\2\u0086\u0087\7\24\2\2\u0087\u008a"+
+		"\b\r\1\2\u0088\u008a\7\25\2\2\u0089\u0086\3\2\2\2\u0089\u0088\3\2\2\2"+
+		"\u008a\31\3\2\2\2\r$.\67<Jipx|\u0083\u0089";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -10,6 +10,7 @@ from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
+from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand
 
 
 
