@@ -7,7 +7,7 @@ import sys
 
  
 
-import isiExceptions
+from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
@@ -292,8 +292,12 @@ class IsiLangParser ( Parser ):
             self.match(IsiLangParser.ID)
 
             symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
-            print("Simbolo adicionado", symbol)
-            self._symbolTable.add(symbol)
+
+            if(self._symbolTable.exists(str(symbol.getName())) == False):
+                 print("Simbolo adicionado", symbol)
+                 self._symbolTable.add(symbol)
+            else:
+                 raise isiExceptions.IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
                                 
             self.state = 43
             self._errHandler.sync(self)
@@ -305,8 +309,12 @@ class IsiLangParser ( Parser ):
                 self.match(IsiLangParser.ID)
 
                 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
-                print("Simbolo adicionado", symbol)
-                self._symbolTable.add(symbol)
+
+                if(self._symbolTable.exists(str(symbol.getName())) == False):
+                     print("Simbolo adicionado", symbol)
+                     self._symbolTable.add(symbol)
+                else:
+                     raise isiExceptions.IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 
                 self.state = 45
                 self._errHandler.sync(self)
@@ -357,7 +365,7 @@ class IsiLangParser ( Parser ):
                 self.state = 48
                 self.match(IsiLangParser.T__2)
 
-                self.setTipo(0) #isiVariable.IsiVariable.NUMBER
+                self.setTipo(IsiVariable.NUMBER)
                 print("tipo lido: {}".format(self.getTipo())) 
                                     
                 pass
@@ -366,7 +374,7 @@ class IsiLangParser ( Parser ):
                 self.state = 50
                 self.match(IsiLangParser.T__3)
 
-                self.setTipo(1) #isiVariable.IsiVariable.TEXT
+                self.setTipo(IsiVariable.TEXT)
                 print("tipo lido: {}".format(self.getTipo()))
                                     
                 pass
@@ -561,7 +569,16 @@ class IsiLangParser ( Parser ):
             self.match(IsiLangParser.AP)
             self.state = 75
             self.match(IsiLangParser.ID)
+
             print("ID = " + str(self._ctx.getChild(-1)))
+            print("ID = " + str(self._ctx.getChild(-1)))
+            print("Dict de simbolos no momento do comando leia:")
+            self._symbolTable.print()
+            print("lendo e inserindo no simbolo: {}".format(self._symbolTable.get(str(self._ctx.getChild(-1)))))
+            if (self._symbolTable.exists(self._ctx.getChild(-1)) == False):
+                 raise IsiSemanticException("Erro Semantico! A variavel {} nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
+
+
             self.state = 77
             self.match(IsiLangParser.FP)
             self.state = 78

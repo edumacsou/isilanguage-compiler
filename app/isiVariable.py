@@ -6,20 +6,20 @@ class IsiVariable(IsiSymbol):
     NUMBER = 0
     TEXT = 1
 
-    def __init__(self, name, type, value, used):
+    def __init__(self, name: str, type, value, used):
         super().setName(name)
         self.type = type
         self.value = value
         self.used = False
 
     def getType(self):
-        self.type
+        return self.type
 
     def setType(self, type):
         self.type = type
 
     def getValue(self):
-        self.value
+        return self.value
 
     def setValue(self, value):
         self.value = value
@@ -44,4 +44,3 @@ class IsiVariable(IsiSymbol):
             str = "String"
 
         return str + " " + self.name
-

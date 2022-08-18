@@ -6,7 +6,7 @@ else:
     from IsiLangParser import IsiLangParser
  
 
-import isiExceptions
+from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable

@@ -5,10 +5,10 @@
 class IsiSymbol:
     
     def __init__(self, nome):
-        self.name = nome
+        self.name: str = nome
 
     def getName(self):
-        self.name
+        return self.name
 
     def setName(self, newname):
         self.name = newname

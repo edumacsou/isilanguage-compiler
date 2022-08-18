@@ -1,10 +1,10 @@
 // Generated from f:\UFABC\Github\isilanguage-compiler\app\IsiLang.g4 by ANTLR 4.9.2
  
 
-import isiExceptions
-import isiSymbol
-import isiVariable
-import isiSymbolTable
+from isiExceptions import IsiSemanticException
+from isiSymbol import IsiSymbol
+from isiVariable import IsiVariable
+from isiSymbolTable import IsiSymbolTable
 
 
 import org.antlr.v4.runtime.atn.*;
@@ -100,16 +100,10 @@ public class IsiLangParser extends Parser {
 
 
 
-	global _tipo
-	_tipo = 0
-	global _varName
-	_varName = ""
-	global _varValue
-	_varValue = ""
-
-	global symbolTable
-	symbolTable = isiSymbolTable.IsiSymbolTable()
-
+	def setTipo(self, tipo):
+	  self._tipo = tipo
+	def getTipo(self):
+	  return self._tipo
 
 	public IsiLangParser(TokenStream input) {
 		super(input);
@@ -135,18 +129,11 @@ public class IsiLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(24);
-			match(T__0);
+			self._symbolTable = IsiSymbolTable()
 			setState(25);
+			match(T__0);
+			setState(26);
 			decl();
-
-			import os
-			## __file is inside app/src/parser, the root folder of the project will be app/
-			ROOT_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), '../../'))
-			import sys
-			sys.path.append(ROOT_PATH)
-			from src.parser.Singleton import Singleton
-			Singleton()
 			setState(27);
 			bloco();
 			setState(28);
@@ -242,14 +229,14 @@ public class IsiLangParser extends Parser {
 			setState(36);
 			match(ID);
 
-			print("ID lido: {}, do tipo {}".format(self._ctx.getChild(-1), _tipo))
-			_varName = self._ctx.getChild(-1)
-			_varValue = None
-			symbol = isiVariable.IsiVariable(_varName, _tipo, _varValue)
-			print("Simbolo adcionado {}".format(symbol.toString()))
-			symbolTable.add(symbol)
+			symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
-
+			if(self._symbolTable.exists(str(symbol.getName())) == False):
+			     print("Simbolo adicionado", symbol)
+			     self._symbolTable.add(symbol)
+			else:
+			     raise isiExceptions.IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
+			                    
 			setState(43);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -261,12 +248,13 @@ public class IsiLangParser extends Parser {
 				setState(39);
 				match(ID);
 
-				print(self._ctx.getChild(-1))
-				_varName = self._ctx.getChild(-1)
-				_varValue = None
-				symbol = isiVariable.IsiVariable(_varName, _tipo, _varValue)
-				print("Simbolo adcionado {}".format(symbol.toString()))
-				symbolTable.add(symbol)
+				symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
+
+				if(self._symbolTable.exists(str(symbol.getName())) == False):
+				     print("Simbolo adicionado", symbol)
+				     self._symbolTable.add(symbol)
+				else:
+				     raise isiExceptions.IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 
 				}
 				}
@@ -308,8 +296,10 @@ public class IsiLangParser extends Parser {
 				{
 				setState(48);
 				match(T__2);
-				_tipo = 0 #isiVariable.IsiVariable.NUMBER
-				print("tipo lido: {}".format(_tipo)) 
+
+				self.setTipo(IsiVariable.NUMBER)
+				print("tipo lido: {}".format(self.getTipo())) 
+				                    
 				}
 				break;
 			case T__3:
@@ -317,8 +307,10 @@ public class IsiLangParser extends Parser {
 				{
 				setState(50);
 				match(T__3);
-				_tipo = 1 #isiVariable.IsiVariable.TEXT
-				print("tipo lido: {}".format(_tipo))   
+
+				self.setTipo(IsiVariable.TEXT)
+				print("tipo lido: {}".format(self.getTipo()))
+				                    
 				}
 				break;
 			default:
@@ -479,7 +471,16 @@ public class IsiLangParser extends Parser {
 			match(AP);
 			setState(75);
 			match(ID);
+
 			print("ID = " + str(self._ctx.getChild(-1)))
+			print("ID = " + str(self._ctx.getChild(-1)))
+			print("Dict de simbolos no momento do comando leia:")
+			self._symbolTable.print()
+			print("lendo e inserindo no simbolo: {}".format(self._symbolTable.get(str(self._ctx.getChild(-1)))))
+			if (self._symbolTable.exists(self._ctx.getChild(-1)) == False):
+			     raise IsiSemanticException("Erro Semantico! A variavel {} nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
+
+
 			setState(77);
 			match(FP);
 			setState(78);
@@ -800,8 +801,8 @@ public class IsiLangParser extends Parser {
 		"\5\13t\n\13\3\f\3\f\3\f\7\fy\n\f\f\f\16\f|\13\f\3\r\3\r\3\r\2\2\16\2\4"+
 		"\6\b\n\f\16\20\22\24\26\30\2\3\3\2\24\25\2~\2\32\3\2\2\2\4!\3\2\2\2\6"+
 		"%\3\2\2\2\b\66\3\2\2\2\n9\3\2\2\2\fI\3\2\2\2\16K\3\2\2\2\20R\3\2\2\2\22"+
-		"X\3\2\2\2\24]\3\2\2\2\26u\3\2\2\2\30}\3\2\2\2\32\33\7\3\2\2\33\34\5\4"+
-		"\3\2\34\35\b\2\1\2\35\36\5\n\6\2\36\37\7\4\2\2\37\3\3\2\2\2 \"\5\6\4\2"+
+		"X\3\2\2\2\24]\3\2\2\2\26u\3\2\2\2\30}\3\2\2\2\32\33\b\2\1\2\33\34\7\3"+
+		"\2\2\34\35\5\4\3\2\35\36\5\n\6\2\36\37\7\4\2\2\37\3\3\2\2\2 \"\5\6\4\2"+
 		"! \3\2\2\2\"#\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\5\3\2\2\2%&\5\b\5\2&\'\7\24"+
 		"\2\2\'-\b\4\1\2()\7\20\2\2)*\7\24\2\2*,\b\4\1\2+(\3\2\2\2,/\3\2\2\2-+"+
 		"\3\2\2\2-.\3\2\2\2.\60\3\2\2\2/-\3\2\2\2\60\61\7\r\2\2\61\7\3\2\2\2\62"+

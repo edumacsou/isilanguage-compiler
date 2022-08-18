@@ -1,10 +1,10 @@
 // Generated from f:\UFABC\Github\isilanguage-compiler\app\IsiLang.g4 by ANTLR 4.9.2
  
 
-import isiExceptions
-import isiSymbol
-import isiVariable
-import isiSymbolTable
+from isiExceptions import IsiSemanticException
+from isiSymbol import IsiSymbol
+from isiVariable import IsiVariable
+from isiSymbolTable import IsiSymbolTable
 
 
 import org.antlr.v4.runtime.Lexer;
@@ -93,16 +93,10 @@ public class IsiLangLexer extends Lexer {
 
 
 
-	global _tipo
-	_tipo = 0
-	global _varName
-	_varName = ""
-	global _varValue
-	_varValue = ""
-
-	global symbolTable
-	symbolTable = isiSymbolTable.IsiSymbolTable()
-
+	def setTipo(self, tipo):
+	  self._tipo = tipo
+	def getTipo(self):
+	  return self._tipo
 
 
 	public IsiLangLexer(CharStream input) {
