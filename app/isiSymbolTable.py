@@ -15,12 +15,13 @@ class IsiSymbolTable:
         #return symbolname in self._hashTable.keys()
         return (self._hashTable.get(symbolname, None) != None)
 
-#    def get(self, keyname: str):
-#        #return self._hashTable.get(keyname)
-#        try:
-#            return self._hashTable[keyname]
-#        except:
-#            return None
+    def setUsed(self, varName):
+        self._hashTable[varName].setUsed(True)
+
+    def checkUnused (self):
+        for k in self._hashTable.keys():
+            if not self._hashTable[k].getUsed():
+                print("Warning: unused variable {}".format(k))
 
     def __str__(self):
         text=[]

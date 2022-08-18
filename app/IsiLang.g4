@@ -16,6 +16,11 @@ def setTipo(self, tipo):
   self._tipo = tipo
 def getTipo(self):
   return self._tipo
+
+def checkVar(self, varName):
+  if not self._symbolTable.exists(varName):
+    raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente! ".format(varName))
+  self._symbolTable.setUsed(varName)
 }
 
 prog	: 
@@ -31,7 +36,7 @@ self._exprContent = None
     'programa' decl bloco  'fimprog;'
 {
 # comandos em python executados no fim do programa
-
+self._symbolTable.checkUnused()
 self._isiProgram.setCommands(self._curThread)
 }
       ;
@@ -87,10 +92,8 @@ cmd		:  cmdleitura {print("Reconhecido comando de leitura!")    }
 
 cmdleitura	: 'leia' AP
                         ID {
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando inserir um valor nela!".format(self._ctx.getChild(-1)))
-else:
-     self._readIDCommand = str(self._ctx.getChild(-1))
+self.checkVar(self._ctx.getChild(-1).getText())
+self._readIDCommand = str(self._ctx.getChild(-1))
 }
                         FP
                         SC
@@ -104,10 +107,8 @@ cmdescrita	: 'escreva'
                  AP
                  ID
                  {
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando imprimir ela!".format(self._ctx.getChild(-1)))
-else:
-     self._readIDCommand = str(self._ctx.getChild(-1))
+self.checkVar(self._ctx.getChild(-1).getText())
+self._readIDCommand = str(self._ctx.getChild(-1))
 }
                  FP
                  SC
@@ -126,15 +127,11 @@ cmdattrib	:  ID
 
 cmdselecao  :  'se' AP
                     ID {
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
-
+self.checkVar(self._ctx.getChild(-1).getText())
 }
                     OPREL
                     (ID {
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
-
+self.checkVar(self._ctx.getChild(-1).getText())
 } | NUMBER)
                     FP
                     ACH
@@ -150,15 +147,11 @@ if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
 
 cmdenquanto    : 'enquanto' AP
                             ID{
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
-
+self.checkVar(self._ctx.getChild(-1).getText())
 }
                     OPREL
                     (ID {
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
-
+self.checkVar(self._ctx.getChild(-1).getText())
 } | NUMBER)
                     FP
                     ACH
@@ -174,9 +167,7 @@ expr		:  termo (
 			;
 
 termo		: ID {
-if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
-     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa expressao!".format(self._ctx.getChild(-1)))
-
+self.checkVar(self._ctx.getChild(-1).getText())
 }
             |
               NUMBER

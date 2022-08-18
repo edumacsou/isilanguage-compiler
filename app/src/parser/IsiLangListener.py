@@ -107,6 +107,15 @@ class IsiLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by IsiLangParser#cmdenquanto.
+    def enterCmdenquanto(self, ctx:IsiLangParser.CmdenquantoContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#cmdenquanto.
+    def exitCmdenquanto(self, ctx:IsiLangParser.CmdenquantoContext):
+        pass
+
+
     # Enter a parse tree produced by IsiLangParser#expr.
     def enterExpr(self, ctx:IsiLangParser.ExprContext):
         pass
