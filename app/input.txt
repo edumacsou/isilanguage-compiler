@@ -1,13 +1,13 @@
 programa
 
-  numero a, b;
+  numero a, b, c;
   texto  t1;
 
   leia(a);
   leia(b);
 
   a = 1 + 2 * 3 / b;
-
+  c = 5.755;
 
   se ( a > b ) {
      escreva (a);
@@ -16,6 +16,9 @@ programa
      escreva (b);
   }
 
+  enquanto ( a < b ) {
+     a = a + 1;
+  }
 
 
 fimprog;

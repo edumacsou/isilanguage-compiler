@@ -70,11 +70,9 @@ else:
 
            tipo       : 'numero' {
 self.setTipo(IsiVariable.NUMBER)
-print("tipo lido: {}".format(self.getTipo())) 
                     }
                     | 'texto'  {
 self.setTipo(IsiVariable.TEXT)
-print("tipo lido: {}".format(self.getTipo()))
                     }
            ;
 
@@ -118,7 +116,7 @@ self._curThread.append(cmd)
 }
 			;
 
-cmdattrib	:  ID
+cmdattrib	:  ID {self.checkVar(self._ctx.getChild(-1).getText())}
                ATTR
                expr
                SC
@@ -130,9 +128,7 @@ cmdselecao  :  'se' AP
 self.checkVar(self._ctx.getChild(-1).getText())
 }
                     OPREL
-                    (ID {
-self.checkVar(self._ctx.getChild(-1).getText())
-} | NUMBER)
+                    termo
                     FP
                     ACH
                     (cmd)+
@@ -150,9 +146,7 @@ cmdenquanto    : 'enquanto' AP
 self.checkVar(self._ctx.getChild(-1).getText())
 }
                     OPREL
-                    (ID {
-self.checkVar(self._ctx.getChild(-1).getText())
-} | NUMBER)
+                    termo
                     FP
                     ACH
                     (cmd)+
