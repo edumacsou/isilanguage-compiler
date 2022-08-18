@@ -180,6 +180,8 @@ class IsiLangParser ( Parser ):
             self._isiProgram = IsiProgram()
             self._readIDCommand = None
             self._curThread = []
+            self._exprID = None
+            self._exprContent = None
 
             self.state = 25
             self.match(IsiLangParser.T__0)

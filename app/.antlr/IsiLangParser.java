@@ -136,6 +136,8 @@ public class IsiLangParser extends Parser {
 			self._isiProgram = IsiProgram()
 			self._readIDCommand = None
 			self._curThread = []
+			self._exprID = None
+			self._exprContent = None
 
 			setState(25);
 			match(T__0);

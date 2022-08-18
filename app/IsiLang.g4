@@ -25,6 +25,8 @@ self._symbolTable = IsiSymbolTable()
 self._isiProgram = IsiProgram()
 self._readIDCommand = None
 self._curThread = []
+self._exprID = None
+self._exprContent = None
 }
     'programa' decl bloco  'fimprog;'
 {
