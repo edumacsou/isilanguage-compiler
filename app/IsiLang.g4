@@ -81,6 +81,11 @@ if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
 cmdescrita	: 'escreva'
                  AP
                  ID
+                 {
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando imprimir ela!".format(self._ctx.getChild(-1)))
+
+}
                  FP
                  SC
 			;
@@ -93,9 +98,17 @@ cmdattrib	:  ID
 
 
 cmdselecao  :  'se' AP
-                    ID
+                    ID {
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
+
+}
                     OPREL
-                    (ID | NUMBER)
+                    (ID {
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa operacao logica!".format(self._ctx.getChild(-1)))
+
+} | NUMBER)
                     FP
                     ACH
                     (cmd)+
@@ -114,7 +127,11 @@ expr		:  termo (
 	            )*
 			;
 
-termo		: ID
+termo		: ID {
+if (self._symbolTable.exists(str(self._ctx.getChild(-1))) == False):
+     raise IsiSemanticException("Erro Semantico! A variavel '{}' nao foi declarada, e voce esta tentando utilizar ela numa expressao!".format(self._ctx.getChild(-1)))
+
+}
             |
               NUMBER
 			;
