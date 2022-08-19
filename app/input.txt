@@ -11,9 +11,7 @@ programa
 
   se ( a > b ) {
      escreva (a);
-     se(a == 0){
-         escreva(0);
-     }
+
   }
   senao {
      escreva (b);
@@ -22,6 +20,9 @@ programa
   enquanto ( a < b ) {
      a = a + 1;
      escreva(a);
+     enquanto( b < a){
+         escreva(b);
+     }
   }
 
 

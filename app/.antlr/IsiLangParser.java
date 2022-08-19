@@ -702,6 +702,7 @@ public class IsiLangParser extends Parser {
 			setState(113);
 			match(ACH);
 
+			# verificar aqui correcao para aceitar ifs aninhados!
 			self._curThread = []
 			self._stack.append(self._curThread)
 
@@ -734,6 +735,7 @@ public class IsiLangParser extends Parser {
 				setState(123);
 				match(ACH);
 
+				# verificar aqui correcao para aceitar ifs aninhados!
 				self._curThread = []
 				self._stack.append(self._curThread)
 
@@ -830,6 +832,7 @@ public class IsiLangParser extends Parser {
 			setState(144);
 			match(ACH);
 
+			# verificar aqui correcao para aceitar ifs aninhados!
 			self._curThread = []
 			self._stack.append(self._curThread)
 
