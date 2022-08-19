@@ -18,6 +18,9 @@ class IsiSymbolTable:
     def setUsed(self, varName):
         self._hashTable[varName].setUsed(True)
 
+    def get(self, symbolname: str):
+        return self._hashTable.get(symbolname, None)
+
     def checkUnused (self):
         for k in self._hashTable.keys():
             if not self._hashTable[k].getUsed():

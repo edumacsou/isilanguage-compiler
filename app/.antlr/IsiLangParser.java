@@ -113,6 +113,11 @@ public class IsiLangParser extends Parser {
 	    raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
 	  self._symbolTable.setUsed(varName)
 
+
+	def generatePyCode(self):
+	    return self._isiProgram.generatePyTarget()
+	     
+
 	public IsiLangParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
@@ -150,6 +155,9 @@ public class IsiLangParser extends Parser {
 			self._trueList = []
 			self._falseList = []
 			self._cmdList   = []
+
+
+
 
 			setState(27);
 			match(T__0);
@@ -519,7 +527,7 @@ public class IsiLangParser extends Parser {
 			setState(85);
 			match(SC);
 
-			cmd = ReadCommand(self._readIDCommand)
+			cmd = ReadCommand(self._readIDCommand, self._symbolTable.get(self._readIDCommand))
 			self._stack[-1].append(cmd)
 
 			}

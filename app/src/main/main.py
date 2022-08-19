@@ -17,6 +17,10 @@ def main():
 
     print(parser._isiProgram)
 
+    print("\n\nTentativa de gerar o codigo em python:\n\n")
+
+    print(parser.generatePyCode())
+
 
 if __name__ == '__main__':
     main()

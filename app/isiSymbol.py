@@ -16,3 +16,5 @@ class IsiSymbol:
     def __str__(self):
         return f"IsiSymbol [name = {self.name} ]"
 
+    def generatePythonCode(self):
+        pass

@@ -164,6 +164,11 @@ class IsiLangParser ( Parser ):
       self._symbolTable.setUsed(varName)
 
 
+    def generatePyCode(self):
+        return self._isiProgram.generatePyTarget()
+         
+
+
 
     class ProgContext(ParserRuleContext):
 
@@ -212,6 +217,9 @@ class IsiLangParser ( Parser ):
             self._trueList = []
             self._falseList = []
             self._cmdList   = []
+
+
+
 
             self.state = 27
             self.match(IsiLangParser.T__0)
@@ -640,7 +648,7 @@ class IsiLangParser ( Parser ):
             self.state = 85
             self.match(IsiLangParser.SC)
 
-            cmd = ReadCommand(self._readIDCommand)
+            cmd = ReadCommand(self._readIDCommand, self._symbolTable.get(self._readIDCommand))
             self._stack[-1].append(cmd)
 
         except RecognitionException as re:

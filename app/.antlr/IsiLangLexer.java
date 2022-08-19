@@ -107,6 +107,11 @@ public class IsiLangLexer extends Lexer {
 	  self._symbolTable.setUsed(varName)
 
 
+	def generatePyCode(self):
+	    return self._isiProgram.generatePyTarget()
+	     
+
+
 	public IsiLangLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);

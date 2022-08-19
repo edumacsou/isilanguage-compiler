@@ -37,10 +37,13 @@ class IsiVariable(IsiSymbol):
     # avaliar se isso faz sentido, dado que em python nao declaramos tipos?
     def generatePythonCode(self):
         
+        # deixando apenas como comentario, porque em python nao temos um trecho especifico para declarar
+        # variaveis, muito menos seus tipos
 
+        # avaliar deixar como type hint qndo possivel?
         if (self.type == self.NUMBER):
-            str = "double"
+            str = "#double"
         else:
-            str = "String"
+            str = "#String"
 
         return str + " " + self.name

@@ -22,6 +22,11 @@ def checkVar(self, varName):
   if not self._symbolTable.exists(varName):
     raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
   self._symbolTable.setUsed(varName)
+
+
+def generatePyCode(self):
+    return self._isiProgram.generatePyTarget()
+     
 }
 
 prog	: 
@@ -38,6 +43,9 @@ self._exprDecision = None
 self._trueList = []
 self._falseList = []
 self._cmdList   = []
+
+
+
 }
     'programa' decl bloco  'fimprog;'
 {
@@ -106,7 +114,7 @@ self._readIDCommand = str(self._ctx.getChild(-1))
                         FP
                         SC
 {
-cmd = ReadCommand(self._readIDCommand)
+cmd = ReadCommand(self._readIDCommand, self._symbolTable.get(self._readIDCommand))
 self._stack[-1].append(cmd)
 }
 			;

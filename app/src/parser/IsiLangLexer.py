@@ -146,3 +146,8 @@ class IsiLangLexer(Lexer):
       self._symbolTable.setUsed(varName)
 
 
+    def generatePyCode(self):
+        return self._isiProgram.generatePyTarget()
+         
+
+
