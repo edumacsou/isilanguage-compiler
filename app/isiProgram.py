@@ -6,7 +6,7 @@ import os
 
 class AbstractCommand():
     
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
         pass
 
 
@@ -19,9 +19,9 @@ class ReadCommand(AbstractCommand):
     def __str__(self):
         return "Read Command[value = {}]\n".format(self._identificador)
 
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
         
-        return "input({})".format(self._identificador)
+        return fIndent + "{} = input()\n".format(self._identificador)
 
 
 class WriteCommand(AbstractCommand):
@@ -32,9 +32,9 @@ class WriteCommand(AbstractCommand):
     def __str__(self):
         return "Write Command[value = {}]\n".format(self._identificador)
 
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
 
-        return "print({})".format(self._identificador)
+        return fIndent + "print({})\n".format(self._identificador)
 
 
 class AttribCommand(AbstractCommand):
@@ -46,9 +46,9 @@ class AttribCommand(AbstractCommand):
     def __str__(self):
         return "Attribuition Command[id = {}, expr = {}]\n".format(self._identificador, self._expr)
 
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
 
-        return self._identificador + " = " + self._expr
+        return fIndent + self._identificador + " = " + self._expr + "\n"
 
 
 class DecisionCommand(AbstractCommand):
@@ -64,20 +64,20 @@ class DecisionCommand(AbstractCommand):
         return "Decision Command[ condition = {}\n\ntrueList = {}\nfalseList = {}]\n".format(self._condition, "".join(tlistText), "".join(flistText))
 
 
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
 
         decisiontxt = []
         indent = "    "
 
-        decisiontxt.append("if({}):\n".format(self._condition))
+        decisiontxt.append("{}if({}):\n".format(fIndent, self._condition))
 
         for x in self._trueList:
-            decisiontxt.append(indent + x.generatePythonCode())
+            decisiontxt.append(fIndent + indent + x.generatePythonCode())
         
         if(len(self._falseList ) != 0):
-            decisiontxt.append("else:\n")
+            decisiontxt.append(fIndent + "else:\n")
             for x in self._falseList:
-                decisiontxt.append(indent + x.generatePythonCode())
+                decisiontxt.append(fIndent + indent + x.generatePythonCode())
 
         return "".join(decisiontxt)
 
@@ -94,16 +94,17 @@ class WhileCommand(AbstractCommand):
         
         return "While Command[ condition = {}\n\nCommands List:\n{}\n]".format(self._condition, "".join(clistText))
 
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
         
         whiletxt = []
 
         indent = "   "
 
-        whiletxt.append("while({}):\n".format(self._condition))
+        whiletxt.append("{}while({}):\n".format(fIndent, self._condition))
 
         for x in self._cmdList:
-            whiletxt.append(indent + x.generatePythonCode())
+            whiletxt.append(fIndent + indent + x.generatePythonCode())
+
 
         return "".join(whiletxt)
 
@@ -146,16 +147,17 @@ class IsiProgram():
         # para indentar corretamente o codigo
         indent = "    "
 
-        codigoTranspilado.append("def main():")
+        codigoTranspilado.append("def main():\n\n")
 
+        # talvez precise passar a indentacao para o generate...
         for x in self._varTable._hashTable.values():
-            codigoTranspilado.append(indent + x.generatePythonCode())
+            codigoTranspilado.append( x.generatePythonCode(indent))
 
         for y in self._comandos:
-            codigoTranspilado.append(indent + y.generatePythonCode())
+            codigoTranspilado.append( y.generatePythonCode(indent))
 
-        codigoTranspilado.append("if __name__ == __main__:")
-        codigoTranspilado.append("    main()")
+        codigoTranspilado.append("\nif __name__ == \"__main__\":\n")
+        codigoTranspilado.append("    main()\n\n")
 
         resultado = "".join(codigoTranspilado)
 

@@ -11,6 +11,9 @@ programa
 
   se ( a > b ) {
      escreva (a);
+     se(a == 0){
+         escreva(0);
+     }
   }
   senao {
      escreva (b);
