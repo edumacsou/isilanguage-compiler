@@ -36,6 +36,23 @@ class AttribCommand(AbstractCommand):
     def __str__(self):
         return "Attribuition Command[id = {}, expr = {}]\n".format(self._identificador, self._expr)
 
+
+class DecisionCommand(AbstractCommand):
+
+    def __init__(self, condition : str, tlist, flist):
+        self._condition = condition
+        self._trueList  = tlist
+        self._falseList = flist 
+
+    def __str__(self):
+        tlistText = [x.__str__() for x in self._trueList]
+        flistText = [x.__str__() for x in self._falseList]
+        return "Decision Command[ condition = {}\n\ntrueList = {}\nfalseList = {}]\n".format(self._condition, "".join(tlistText), "".join(flistText))
+
+
+
+
+
 class IsiProgram():
 
     def __init__(self):
