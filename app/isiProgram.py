@@ -50,6 +50,17 @@ class DecisionCommand(AbstractCommand):
         return "Decision Command[ condition = {}\n\ntrueList = {}\nfalseList = {}]\n".format(self._condition, "".join(tlistText), "".join(flistText))
 
 
+class WhileCommand(AbstractCommand):
+
+    def __init__(self, condition : str, clist):
+        self._condition = condition
+        self._cmdList  = clist
+        
+
+    def __str__(self):
+        clistText = [x.__str__() for x in self._cmdList]
+        
+        return "While Command[ condition = {}\n\nCommands List:\n{}\n]".format(self._condition, "".join(clistText))
 
 
 

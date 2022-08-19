@@ -6,7 +6,7 @@ from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
-from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand, AttribCommand, DecisionCommand
+from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand, AttribCommand, DecisionCommand, WhileCommand
 
 }
 
@@ -37,6 +37,7 @@ self._exprContent = None
 self._exprDecision = None
 self._trueList = []
 self._falseList = []
+self._cmdList   = []
 }
     'programa' decl bloco  'fimprog;'
 {
@@ -178,13 +179,25 @@ self._stack[-1].append(cmd)
 cmdenquanto    : 'enquanto' AP
                             ID{
 self.checkVar(self._ctx.getChild(-1).getText())
+self._exprDecision = self._ctx.getChild(-1).getText()
 }
-                    OPREL
-                    termo
+                    OPREL{
+self._exprDecision += self._ctx.getChild(-1).getText()
+}
+                    termo{
+self._exprDecision += self._ctx.getChild(-1).getText()
+}
                     FP
-                    ACH
+                    ACH{
+self._curThread = []
+self._stack.append(self._curThread)
+}
                     (cmd)+
-                    FCH
+                    FCH{
+self._cmdList = self._stack.pop()
+cmd = WhileCommand(self._exprDecision, self._cmdList)
+self._stack[-1].append(cmd)
+}
                ;
 
 
