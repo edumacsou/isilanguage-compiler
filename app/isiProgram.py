@@ -17,6 +17,7 @@ class ReadCommand(AbstractCommand):
     def __str__(self):
         return "Read Command[value = {}]\n".format(self._identificador)
 
+
 class WriteCommand(AbstractCommand):
 
     def __init__(self, id: str):
@@ -24,6 +25,16 @@ class WriteCommand(AbstractCommand):
 
     def __str__(self):
         return "Write Command[value = {}]\n".format(self._identificador)
+
+
+class AttribCommand(AbstractCommand):
+
+    def __init__(self, id: str, expr):
+        self._identificador = id
+        self._expr = expr
+
+    def __str__(self):
+        return "Attribuition Command[id = {}, expr = {}]\n".format(self._identificador, self._expr)
 
 class IsiProgram():
 

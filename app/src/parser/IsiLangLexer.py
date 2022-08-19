@@ -10,7 +10,7 @@ from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
-from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand
+from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand, AttribCommand
 
 
 
@@ -139,9 +139,10 @@ class IsiLangLexer(Lexer):
     def getTipo(self):
       return self._tipo
 
+
     def checkVar(self, varName):
       if not self._symbolTable.exists(varName):
-        raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente! ".format(varName))
+        raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
       self._symbolTable.setUsed(varName)
 
 

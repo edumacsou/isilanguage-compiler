@@ -6,7 +6,7 @@ from isiExceptions import IsiSemanticException
 from isiSymbol import IsiSymbol
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
-from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand
+from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand, AttribCommand
 
 }
 
@@ -17,9 +17,10 @@ def setTipo(self, tipo):
 def getTipo(self):
   return self._tipo
 
+
 def checkVar(self, varName):
   if not self._symbolTable.exists(varName):
-    raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente! ".format(varName))
+    raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
   self._symbolTable.setUsed(varName)
 }
 
@@ -116,10 +117,18 @@ self._curThread.append(cmd)
 }
 			;
 
-cmdattrib	:  ID {self.checkVar(self._ctx.getChild(-1).getText())}
-               ATTR
+cmdattrib	:  ID {
+self.checkVar(self._ctx.getChild(-1).getText())
+self._exprID = self._ctx.getChild(-1).getText()
+}
+               ATTR{
+self._exprContent = ""
+               }
                expr
-               SC
+               SC{
+cmd = AttribCommand(self._exprID, self._exprContent)
+self._curThread.append(cmd)
+               }
 			;
 
 
@@ -155,16 +164,21 @@ self.checkVar(self._ctx.getChild(-1).getText())
 
 
 expr		:  termo (
-	             OP
+	             OP{
+self._exprContent += self._ctx.getChild(-1).getText() 
+                  }
 	            termo
 	            )*
 			;
 
 termo		: ID {
 self.checkVar(self._ctx.getChild(-1).getText())
+self._exprContent += self._ctx.getChild(-1).getText()
 }
             |
-              NUMBER
+              NUMBER{
+self._exprContent += self._ctx.getChild(-1).getText()
+              }
 			;
 
 
