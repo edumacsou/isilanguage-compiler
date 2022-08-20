@@ -20,9 +20,7 @@ programa
   enquanto ( a < b ) {
      a = a + 1;
      escreva(a);
-     enquanto( b < a){
-         escreva(b);
-     }
+
   }
 
 
