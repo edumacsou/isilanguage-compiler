@@ -53,13 +53,29 @@ Neste tópico, realizou-se a implementação de um analisador léxico, ou seja, 
 
 ### • Analisador Sintático (Working...)
 
-Aaaaaaaaaaaa
+O Analisador Sintático foi construído sob o Formalismo de Backus-Naur, ou seja, sem recursão à esquerda e composto de uma gramática livre de contexto para a linguagem modelada escolhida.
+
+Dessa forma, e em sequência, segue algumas características e conscientização para sua utilização:
+
+  - Linguagem estruturada;
+  - É necessário sempre utilizar a palavra reservada para a declaração de uma variável;
+  - As variáveis podem ser locais ou globais, mas devem ser declaradas antes da serem chamadas pelos seus respectivos escopos de código;
+  - Na declaração da uma variável é permitido a inicialização da mesma;
+  - Esta linguagem pode possuir várias funções em seu código;
+  - Os delimitadores { } marcam o início e fim de um bloco de código, podendo ser ele: declarações, funções ou comandos;
+  - Expressões relacionais, lógicas e aritméticas são permitidas;
+  - Os operadores desta linguagem seguem a lógica de operações idênticas à da linguagem C;
+  - Em casos que um erro sintático é encontrado, uma mensagem de erro é indicado informando a linha do erro no terminal;
+  - É indicado que o usuário conserte os erros um a um pois o analisador sintático pode não encontrar erros em cascata;
+  - Uma mensagem de sucesso indicará o reconhecimento sintático completo do programa tanto no terminal;
 
 <br />
 
 ### • Analisador Semântico (Working...)
 
 Aaaaaaaaaaaaa
+
+<br />
 
 # Componentes do Grupo
 
