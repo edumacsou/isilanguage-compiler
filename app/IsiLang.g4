@@ -162,7 +162,7 @@ self._exprDecision += self._ctx.getChild(-1).getText()
 }
                     FP
                     ACH{
-# verificar aqui correcao para aceitar ifs aninhados!
+
 self._curThread = []
 self._stack.append(self._curThread)
 }
@@ -173,7 +173,7 @@ self._trueList = self._stack.pop()
 }
                    ('senao'
                    	 ACH{
-# verificar aqui correcao para aceitar ifs aninhados!
+
 self._curThread = []
 self._stack.append(self._curThread)
 }
@@ -199,7 +199,7 @@ self._exprDecision += self._ctx.getChild(-1).getText()
 }
                     FP
                     ACH{
-# verificar aqui correcao para aceitar while's aninhados!
+
 self._curThread = []
 self._stack.append(self._curThread)
 }
@@ -265,4 +265,5 @@ ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 NUMBER	: [0-9]+ ('.' [0-9]+)?
 		;
 
-WS	: (' ' | '\t' | '\n' | '\r') -> skip;
+WS	: (' ' | '\t' | '\n' | '\r') -> skip
+     ;

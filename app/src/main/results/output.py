@@ -4,7 +4,6 @@ def main():
     b = input()
     a = 1+2*3/b
     c = 5.755
-    
     if(a>b):
         print(a)
     else:
