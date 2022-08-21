@@ -73,7 +73,21 @@ Dessa forma, e em sequência, segue algumas características e conscientização
 
 ### • Analisador Semântico (Working...)
 
-Aaaaaaaaaaaaa
+A construção do analisador semântico para a linguagem de programação até então elaborada seguiu de acordo com as seguintes características:
+
+  - A atribuição deve ser do mesmo tipo que foi declarado;
+  - As operações aritméticas, lógicas e relacionais devem ser feitas entre operadores de mesmo tipo;
+  - As chamadas de funções devem ser feitas com o número e ordem de parâmetros corretos;
+  - Retorno de funções deve ser do mesmo tipo declarado; 
+  - Operações ```+``` ```-``` ```/``` ```*``` são compatíveis apenas com operandos inteiro e real;
+  - Operações ```++```  e ```--``` sucedem apenas tipos inteiros e reais;
+  - Operações relacionais com operadores ```==``` ```!=``` podem ser feitas desde que os elementos envolvidos sejam do mesmo tipo;
+  - Operações ```>``` ```<``` ```>=``` ```<=``` só podem ser feitas com os elementos do mesmo tipo;
+  - As variáveis devem ser declaradas como locais ou globais;
+  - É permitido diferentes escopos para sub-programas;
+  - É permitido a existência de uma variável de mesmo nome global e local;
+  - Não é permitido a duplicidade de variáveis;
+  - Não é permitido a duplicidade de funções;
 
 <br />
 
