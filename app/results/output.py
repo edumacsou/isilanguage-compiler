@@ -5,6 +5,8 @@ def main():
     t1 = "Meu Teste"
     a = 1+2*3/b
     c = 5.755
+    print(t1)
+    print("Ola Mundo")
     if(a>b):
         print(a)
     else:

@@ -24,7 +24,7 @@ def checkVar(self, varName):
   self._symbolTable.setUsed(varName)
 
 def checkVarType(self, var):
-  if var.getType() != self._exprType:
+  if var.getType() != self._exprType and self._exprType != "any":
     raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
 def generatePyCode(self):
@@ -121,12 +121,12 @@ self._stack[-1].append(cmd)
 }
 			;
 
-cmdescrita	: 'escreva'
+cmdescrita	: 'escreva' {self._exprType = "any"}
                  AP
-                 ID
+                 termo
                  {
-self.checkVar(self._ctx.getChild(-1).getText())
-self._readIDCommand = str(self._ctx.getChild(-1))
+varName = self._ctx.getChild(-1).getText()
+self._readIDCommand = str(varName)
 }
                  FP
                  SC

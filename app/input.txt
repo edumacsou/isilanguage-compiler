@@ -10,6 +10,9 @@ programa
   a = 1 + 2 * 3 / b;
   c = 5.755;
 
+  escreva(t1);
+  escreva("Ola Mundo");
+
   se ( a > b ) {
      escreva (a);
   }

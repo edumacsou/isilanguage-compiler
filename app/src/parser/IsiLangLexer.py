@@ -154,7 +154,7 @@ class IsiLangLexer(Lexer):
       self._symbolTable.setUsed(varName)
 
     def checkVarType(self, var):
-      if var.getType() != self._exprType:
+      if var.getType() != self._exprType and self._exprType != "any":
         raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
     def generatePyCode(self):
