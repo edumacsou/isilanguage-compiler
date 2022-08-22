@@ -145,6 +145,9 @@ class IsiLangLexer(Lexer):
         raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
       self._symbolTable.setUsed(varName)
 
+    def checkVarType(self, var):
+      if var.getType() != self._exprType:
+        raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
     def generatePyCode(self):
         return self._isiProgram.generatePyTarget()

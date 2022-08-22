@@ -23,6 +23,9 @@ def checkVar(self, varName):
     raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
   self._symbolTable.setUsed(varName)
 
+def checkVarType(self, var):
+  if var.getType() != self._exprType:
+    raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
 def generatePyCode(self):
     return self._isiProgram.generatePyTarget()
@@ -43,8 +46,7 @@ self._exprDecision = None
 self._trueList = []
 self._falseList = []
 self._cmdList   = []
-
-
+self._exprType = None
 
 }
     'programa' decl bloco  'fimprog;'
@@ -99,11 +101,11 @@ self._stack.append(self._curThread)
 		;
 
 
-cmd		:  cmdleitura   {print("Reconhecido comando de leitura!")    }
- 		|  cmdescrita   {print("Reconhecido comando de escrita!")    }
- 		|  cmdattrib    {print("Reconhecido comando de atribuicao!") }
- 		|  cmdselecao   {print("Reconhecido comando de selecao!")    }
- 		|  cmdenquanto  {print("Reconhecido comando de enquanto!")   }
+cmd		:  cmdleitura   {print("Reconhecido comando de leitura!")    } 
+ 		|  cmdescrita   {print("Reconhecido comando de escrita!")  }
+ 		|  cmdattrib    {print("Reconhecido comando de atribuicao!") ## Precisa checar tipo da variável antes da atribuição}
+ 		|  cmdselecao   {print("Reconhecido comando de selecao!") ## Precisa checar tipo da variável na condicional }
+ 		|  cmdenquanto  {print("Reconhecido comando de enquanto!") ## Mas checagem na condicional }
 		;
 
 cmdleitura	: 'leia' AP
@@ -135,8 +137,10 @@ self._stack[-1].append(cmd)
 			;
 
 cmdattrib	:  ID {
-self.checkVar(self._ctx.getChild(-1).getText())
-self._exprID = self._ctx.getChild(-1).getText()
+varName = self._ctx.getChild(-1).getText()
+self.checkVar(varName)
+self._exprID = varName
+self._exprType = self._symbolTable.get(varName).getType()
 }
                ATTR{
 self._exprContent = ""
@@ -151,8 +155,10 @@ self._stack[-1].append(cmd)
 
 cmdselecao  :  'se' AP
                     ID {
-self.checkVar(self._ctx.getChild(-1).getText())
-self._exprDecision = self._ctx.getChild(-1).getText()
+varName = self._ctx.getChild(-1).getText()
+self.checkVar(varName)
+self._exprDecision = varName
+self._exprType = self._symbolTable.get(varName).getType()
 }
                     OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
@@ -188,8 +194,10 @@ self._stack[-1].append(cmd)
 
 cmdenquanto    : 'enquanto' AP
                             ID{
-self.checkVar(self._ctx.getChild(-1).getText())
-self._exprDecision = self._ctx.getChild(-1).getText()
+varName = self._ctx.getChild(-1).getText()
+self.checkVar(varName)
+self._exprDecision = varName
+self._exprType = self._symbolTable.get(varName).getType()
 }
                     OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
@@ -216,17 +224,21 @@ expr		:  termo (
 	             OP{
 self._exprContent += self._ctx.getChild(-1).getText() 
                   }
-	            termo
+	            termo 
 	            )*
 			;
 
 termo		: ID {
-self.checkVar(self._ctx.getChild(-1).getText())
-self._exprContent += self._ctx.getChild(-1).getText()
+varName = self._ctx.getChild(-1).getText()
+self.checkVar(varName)
+self._exprContent += varName
+self.checkVarType(self._symbolTable.get(varName))
 }
             |
               NUMBER{
 self._exprContent += self._ctx.getChild(-1).getText()
+varName = self._ctx.getChild(-1).getText()
+self.checkVarType(IsiVariable(f"Número {varName}", IsiVariable.NUMBER, varName, False))
               }
 			;
 

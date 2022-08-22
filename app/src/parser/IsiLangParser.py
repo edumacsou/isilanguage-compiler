@@ -163,6 +163,9 @@ class IsiLangParser ( Parser ):
         raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
       self._symbolTable.setUsed(varName)
 
+    def checkVarType(self, var):
+      if var.getType() != self._exprType:
+        raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
     def generatePyCode(self):
         return self._isiProgram.generatePyTarget()
@@ -217,8 +220,7 @@ class IsiLangParser ( Parser ):
             self._trueList = []
             self._falseList = []
             self._cmdList   = []
-
-
+            self._exprType = None
 
 
             self.state = 27
@@ -563,25 +565,25 @@ class IsiLangParser ( Parser ):
                 self.enterOuterAlt(localctx, 2)
                 self.state = 66
                 self.cmdescrita()
-                print("Reconhecido comando de escrita!")    
+                print("Reconhecido comando de escrita!")  
                 pass
             elif token in [IsiLangParser.ID]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 69
                 self.cmdattrib()
-                print("Reconhecido comando de atribuicao!") 
+                print("Reconhecido comando de atribuicao!") ## Precisa checar tipo da variável antes da atribuição
                 pass
             elif token in [IsiLangParser.T__6]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 72
                 self.cmdselecao()
-                print("Reconhecido comando de selecao!")    
+                print("Reconhecido comando de selecao!") ## Precisa checar tipo da variável na condicional 
                 pass
             elif token in [IsiLangParser.T__8]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 75
                 self.cmdenquanto()
-                print("Reconhecido comando de enquanto!")   
+                print("Reconhecido comando de enquanto!") ## Mas checagem na condicional 
                 pass
             else:
                 raise NoViableAltException(self)
@@ -767,8 +769,10 @@ class IsiLangParser ( Parser ):
             self.state = 96
             self.match(IsiLangParser.ID)
 
-            self.checkVar(self._ctx.getChild(-1).getText())
-            self._exprID = self._ctx.getChild(-1).getText()
+            varName = self._ctx.getChild(-1).getText()
+            self.checkVar(varName)
+            self._exprID = varName
+            self._exprType = self._symbolTable.get(varName).getType()
 
             self.state = 98
             self.match(IsiLangParser.ATTR)
@@ -861,8 +865,10 @@ class IsiLangParser ( Parser ):
             self.state = 106
             self.match(IsiLangParser.ID)
 
-            self.checkVar(self._ctx.getChild(-1).getText())
-            self._exprDecision = self._ctx.getChild(-1).getText()
+            varName = self._ctx.getChild(-1).getText()
+            self.checkVar(varName)
+            self._exprDecision = varName
+            self._exprType = self._symbolTable.get(varName).getType()
 
             self.state = 108
             self.match(IsiLangParser.OPREL)
@@ -1007,8 +1013,10 @@ class IsiLangParser ( Parser ):
             self.state = 137
             self.match(IsiLangParser.ID)
 
-            self.checkVar(self._ctx.getChild(-1).getText())
-            self._exprDecision = self._ctx.getChild(-1).getText()
+            varName = self._ctx.getChild(-1).getText()
+            self.checkVar(varName)
+            self._exprDecision = varName
+            self._exprType = self._symbolTable.get(varName).getType()
 
             self.state = 139
             self.match(IsiLangParser.OPREL)
@@ -1162,8 +1170,10 @@ class IsiLangParser ( Parser ):
                 self.state = 163
                 self.match(IsiLangParser.ID)
 
-                self.checkVar(self._ctx.getChild(-1).getText())
-                self._exprContent += self._ctx.getChild(-1).getText()
+                varName = self._ctx.getChild(-1).getText()
+                self.checkVar(varName)
+                self._exprContent += varName
+                self.checkVarType(self._symbolTable.get(varName))
 
                 pass
             elif token in [IsiLangParser.NUMBER]:
@@ -1172,6 +1182,8 @@ class IsiLangParser ( Parser ):
                 self.match(IsiLangParser.NUMBER)
 
                 self._exprContent += self._ctx.getChild(-1).getText()
+                varName = self._ctx.getChild(-1).getText()
+                self.checkVarType(IsiVariable(f"Número {varName}", IsiVariable.NUMBER, varName, False))
                               
                 pass
             else:
