@@ -236,10 +236,16 @@ self.checkVarType(self._symbolTable.get(varName))
 }
             |
               NUMBER{
-self._exprContent += self._ctx.getChild(-1).getText()
 varName = self._ctx.getChild(-1).getText()
+self._exprContent += varName
 self.checkVarType(IsiVariable(f"Número {varName}", IsiVariable.NUMBER, varName, False))
               }
+            |
+              TEXT{
+varName = self._ctx.getChild(-1).getText()
+self._exprContent += varName
+self.checkVarType(IsiVariable(f"Texto {varName}", IsiVariable.TEXT, varName, False))
+            }
 			;
 
 
@@ -276,6 +282,9 @@ ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 
 NUMBER	: [0-9]+ ('.' [0-9]+)?
 		;
+
+TEXT : '"' ([a-z] | [A-Z] | [0-9] | ' ')* '"'
+    ;
 
 WS	: (' ' | '\t' | '\n' | '\r') -> skip
      ;
