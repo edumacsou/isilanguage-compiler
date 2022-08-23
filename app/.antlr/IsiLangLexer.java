@@ -103,9 +103,9 @@ public class IsiLangLexer extends Lexer {
 
 
 	def checkVar(self, varName):
-	  if not self._symbolTable.exists(varName):
+	  if not self._isiProgram._varTable.exists(varName):
 	    raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
-	  self._symbolTable.setUsed(varName)
+	  self._isiProgram._varTable.setUsed(varName)
 
 	def checkVarType(self, var):
 	  if var.getTypeStr() != self._exprType and self._exprType != "any":
@@ -113,6 +113,9 @@ public class IsiLangLexer extends Lexer {
 
 	def generatePyCode(self, outputname="stdOutput.py"):
 	    return self._isiProgram.generatePyTarget(outputname)
+
+	def generateCCode(self, outputname="stdOutput.c"):
+	    return self._isiProgram.generateCTarget(outputname)
 	     
 
 

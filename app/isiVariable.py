@@ -46,7 +46,7 @@ class IsiVariable(IsiSymbol):
 
 
     # avaliar se isso faz sentido, dado que em python nao declaramos tipos?
-    def generatePythonCode(self):
+    def generatePythonCode(self, fIndent=""):
         
         # deixando apenas como comentario, porque em python nao temos um trecho especifico para declarar
         # variaveis, muito menos seus tipos
@@ -57,4 +57,20 @@ class IsiVariable(IsiSymbol):
         else:
             str = "#String"
 
-        return str + " " + self.name
+        return fIndent + str + " " + self.name + ";\n"
+
+    def generateCCode(self, fIndent=""):
+
+        append = ""
+
+        if (self.type == self.NUMBER):
+            str = "float"
+        elif ((self.type == self.BOOL)):
+            str = "int"
+        else:
+            str = "char"
+            append = "[1000]"
+
+        
+
+        return fIndent + str + " " + self.name + append + ";\n"

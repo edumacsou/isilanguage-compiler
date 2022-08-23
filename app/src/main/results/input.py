@@ -1,5 +1,12 @@
 def main():
 
+    #double a;
+    #double b;
+    #double c;
+    #double d;
+    #String t1;
+    #String t2;
+    #String x;
     x = True
     print("Escreva o numero a:\n")
     a = float(input())

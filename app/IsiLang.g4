@@ -19,9 +19,9 @@ def getTipo(self):
 
 
 def checkVar(self, varName):
-  if not self._symbolTable.exists(varName):
+  if not self._isiProgram._varTable.exists(varName):
     raise IsiSemanticException("Erro Semantico! A variavel {} NAO existe! ".format(varName))
-  self._symbolTable.setUsed(varName)
+  self._isiProgram._varTable.setUsed(varName)
 
 def checkVarType(self, var):
   if var.getTypeStr() != self._exprType and self._exprType != "any":
@@ -29,13 +29,16 @@ def checkVarType(self, var):
 
 def generatePyCode(self, outputname="stdOutput.py"):
     return self._isiProgram.generatePyTarget(outputname)
+
+def generateCCode(self, outputname="stdOutput.c"):
+    return self._isiProgram.generateCTarget(outputname)
      
 }
 
 prog	: 
 {
 # comandos em python executados antes do inicio do programa
-self._symbolTable = IsiSymbolTable()
+#self._symbolTable = IsiSymbolTable()
 self._isiProgram = IsiProgram()
 self._readIDCommand = None
 self._curThread = []
@@ -55,7 +58,7 @@ self._elseCheckStack = []
     'programa' decl bloco  'fimprog;'
 {
 # comandos em python executados no fim do programa
-self._symbolTable.checkUnused()
+self._isiProgram._varTable.checkUnused()
 self._isiProgram.setCommands(self._stack.pop())
 }
       ;
@@ -67,9 +70,10 @@ decl    : (declaravar)+
 declaravar :  tipo ID {
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
-if(self._symbolTable.exists(str(symbol.getName())) == False):
-     #print("Simbolo adicionado", symbol)
-     self._symbolTable.add(symbol)
+if(self._isiProgram._varTable.exists(str(symbol.getName())) == False):
+     print("Simbolo adicionado: {}".format(symbol.getName()))
+     self._isiProgram._varTable.add(symbol)
+     print("symbol table:{}".format(self._isiProgram._varTable._hashTable))
 else:
      raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
                     }
@@ -77,9 +81,10 @@ else:
                        ID   {
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
-if(self._symbolTable.exists(str(symbol.getName())) == False):
-     #print("Simbolo adicionado", symbol)
-     self._symbolTable.add(symbol)
+if(self._isiProgram._varTable.exists(str(symbol.getName())) == False):
+     print("Simbolo adicionado: {}".format(symbol.getName()))
+     self._isiProgram._varTable.add(symbol)
+     print("symbol table:{}".format(self._isiProgram._varTable._hashTable))
 else:
      raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 }
@@ -122,19 +127,18 @@ cmd		:  invalidcmdleitura
 
 cmdleitura	: 'leia' AP
                         ID {
-print("Deu pau aqui no leia?")
 self.checkVar(self._ctx.getChild(-1).getText())
 self._readIDCommand = str(self._ctx.getChild(-1))
 }
                         FP
                         SC
 {
-cmd = ReadCommand(self._readIDCommand, self._symbolTable.get(self._readIDCommand))
+cmd = ReadCommand(self._readIDCommand, self._isiProgram._varTable.get(self._readIDCommand))
 self._stack[-1].append(cmd)
 }
 			;
 
-cmdescrita	: 'escreva' {self._exprType = "any"}{print("Deu pau aqui no escreva?")}
+cmdescrita	: 'escreva' {self._exprType = "any"}
                  AP
                  termo
                  {
@@ -144,7 +148,12 @@ self._readIDCommand = str(varName)
                  FP
                  SC
 {
-cmd = WriteCommand(self._readIDCommand)
+variavel = self._isiProgram._varTable.get(self._readIDCommand)
+if(variavel != None):
+     tipo = variavel.getType()
+else:
+     tipo = IsiVariable.TEXT
+cmd = WriteCommand(self._readIDCommand, tipo)
 self._stack[-1].append(cmd)
 }
 			;
@@ -183,12 +192,10 @@ invalidcmdenquantocmd :   'enquanto' AP ID OPREL termo FP ACH FCH {raise IsiSema
 
 
 cmdattrib	:  ID {
-print("Deu pau aqui no attrib?")
 varName = self._ctx.getChild(-1).getText()
-print("deu pau aqui vei: {}".format(varName))
 self.checkVar(varName)
 self._exprID = varName
-self._exprType = self._symbolTable.get(varName).getTypeStr()
+self._exprType = self._isiProgram._varTable.get(varName).getTypeStr()
 }
                ATTR{
 self._exprContent = ""
@@ -206,7 +213,7 @@ cmdselecao  :  'se' AP
 varName = self._ctx.getChild(-1).getText()
 self.checkVar(varName)
 self._exprDecision = varName
-self._exprType = self._symbolTable.get(varName).getTypeStr()
+self._exprType = self._isiProgram._varTable.get(varName).getTypeStr()
 }
                    OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
@@ -254,7 +261,7 @@ cmdenquanto    : 'enquanto' AP
 varName = self._ctx.getChild(-1).getText()
 self.checkVar(varName)
 self._exprDecision = varName
-self._exprType = self._symbolTable.get(varName).getTypeStr()
+self._exprType = self._isiProgram._varTable.get(varName).getTypeStr()
 }
                     OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
@@ -289,7 +296,7 @@ termo		: ID {
 varName = self._ctx.getChild(-1).getText()
 self.checkVar(varName)
 self._exprContent += varName
-self.checkVarType(self._symbolTable.get(varName))
+self.checkVarType(self._isiProgram._varTable.get(varName))
 }
             |
               NUMBER{

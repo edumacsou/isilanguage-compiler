@@ -15,13 +15,17 @@ def main():
     stream = CommonTokenStream(lexer)
     parser = IsiLangParser(stream)
     tree = parser.prog()
-    print(tree.toStringTree(recog=parser))
+    #print(tree.toStringTree(recog=parser))
 
-    print(parser._isiProgram)
+    #print(parser._isiProgram)
 
     print("\n\nCodigo isiLanguage compilado em Python:\n\n")
 
     print(parser.generatePyCode(outputname+".py"))
+
+    print("\n\nCodigo isiLanguage compilado em C:\n\n")
+
+    print(parser.generateCCode(outputname+".c"))
 
 
 if __name__ == '__main__':

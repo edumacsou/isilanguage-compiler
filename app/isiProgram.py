@@ -29,10 +29,20 @@ class ReadCommand(AbstractCommand):
         else:
             return fIndent + "{} = input()\n".format(self._identificador)
 
+    def generateCCode(self, fIndent=""):
+        if (self._var.getType() == IsiVariable.NUMBER):
+            return fIndent + "scanf(\"%f\", &{});\n".format(self._identificador)
+        elif (self._var.getType() == IsiVariable.BOOL):
+            return fIndent + "scanf(\"%d\", &{});\n".format(self._identificador)  # ler como int, pois C na otem booleano!
+        else:
+            return fIndent + "scanf(\"%s\", &{});\n".format(self._identificador)  # avaliar necessidade do operador & 
+        
+
 class WriteCommand(AbstractCommand):
 
-    def __init__(self, id: str):
+    def __init__(self, id: str, type=None):
         self._identificador = id
+        self._type = type
 
     def __str__(self):
         return "Write Command[value = {}]\n".format(self._identificador)
@@ -40,6 +50,18 @@ class WriteCommand(AbstractCommand):
     def generatePythonCode(self, fIndent=""):
 
         return fIndent + "print({})\n".format(self._identificador)
+
+    def generateCCode(self, fIndent=""):
+        if (self._type == IsiVariable.NUMBER):
+            #print("transpilando escrita de numero para C")
+            return fIndent + "printf(\"%f\", {});\n".format(self._identificador)
+        elif (self._type == IsiVariable.BOOL):
+            #print("transpilando escrita de bool para C")
+            return fIndent + "printf(\"%d\", {});\n".format(self._identificador)  # imprimir como int, pois C na otem booleano!
+        else:
+            #print("transpilando escrita de string para C")
+            return fIndent + "printf({});\n".format(self._identificador)
+    
 
 
 class AttribCommand(AbstractCommand):
@@ -59,6 +81,18 @@ class AttribCommand(AbstractCommand):
     def generatePythonCode(self, fIndent=""):
 
         return fIndent + self._identificador + " = " + self._expr + "\n"
+
+    def generateCCode(self, fIndent=""):
+        exprClean = str(self._expr)
+
+        if(exprClean.find("%") > -1):
+            return fIndent + self._identificador + " = " + "(int){}%(int){};\n".format(exprClean.split("%")[0], exprClean.split("%")[1])
+        elif(exprClean.find("**") > -1):
+            return fIndent + self._identificador + " = " + "pow({}, {});\n".format(exprClean.split("**")[0], exprClean.split("**")[1])
+        elif(exprClean.find("\"") > -1):  # atrib de strings, precisamos adaptar o uso de strcopy em C
+            return fIndent + "strcpy({}, {});\n".format(self._identificador, exprClean)
+        else:
+            return fIndent + self._identificador + " = " + exprClean + ";\n"
 
 
 class DecisionCommand(AbstractCommand):
@@ -83,18 +117,41 @@ class DecisionCommand(AbstractCommand):
         indent = "    "
 
         decisiontxt.append("{}if({}):\n".format(fIndent, self._condition))
-        print("len de fIndent no if ({})= {}".format(self._condition, len(fIndent)))
+        #print("len de fIndent no if ({})= {}".format(self._condition, len(fIndent)))
         for x in self._trueList:
             #decisiontxt.append(fIndent + indent + x.generatePythonCode())
             decisiontxt.append(x.generatePythonCode(fIndent + indent))
 
         
         if(len(self._falseList ) != 0):
-            print("len de fIndent no else ({})= {}".format(self._condition, len(fIndent)))
+            #print("len de fIndent no else ({})= {}".format(self._condition, len(fIndent)))
             decisiontxt.append("{}else:\n".format(fIndent))
             for x in self._falseList:
                 #decisiontxt.append(fIndent + indent + x.generatePythonCode())
                 decisiontxt.append(x.generatePythonCode(fIndent + indent))
+
+        return "".join(decisiontxt)
+
+    def generateCCode(self, fIndent=""):
+        
+        decisiontxt = []
+        indent = "    "
+
+        decisiontxt.append("{}if({}){{\n".format(fIndent, self._condition))
+        #print("len de fIndent no if ({})= {}".format(self._condition, len(fIndent)))
+        for x in self._trueList:
+            #decisiontxt.append(fIndent + indent + x.generatePythonCode())
+            decisiontxt.append(x.generateCCode(fIndent + indent))
+
+        
+        if(len(self._falseList ) != 0):
+            #print("len de fIndent no else ({})= {}".format(self._condition, len(fIndent)))
+            decisiontxt.append("{}}}else{{\n".format(fIndent))
+            for x in self._falseList:
+                #decisiontxt.append(fIndent + indent + x.generatePythonCode())
+                decisiontxt.append(x.generateCCode(fIndent + indent))
+
+        decisiontxt.append("{}}}\n".format(fIndent))
 
         return "".join(decisiontxt)
 
@@ -124,6 +181,25 @@ class WhileCommand(AbstractCommand):
             whiletxt.append(x.generatePythonCode(fIndent + indent))
 
         return "".join(whiletxt)
+
+
+    def generateCCode(self, fIndent=""):
+
+        whiletxt = []
+
+        indent = "   "
+
+        whiletxt.append("{}while({}){{\n".format(fIndent, self._condition))
+
+        for x in self._cmdList:
+            #whiletxt.append(fIndent + indent + x.generatePythonCode())
+            whiletxt.append(x.generateCCode(fIndent + indent))
+
+        whiletxt.append("{}}}\n".format(fIndent))
+
+        return "".join(whiletxt)
+
+        
 
 class IsiProgram():
 
@@ -188,3 +264,47 @@ class IsiProgram():
             f.write(resultado)
 
         return resultado
+
+    def generateCTarget(self, outputname="stdOutput.c"):
+
+        codigoTranspilado = []
+        # para indentar corretamente o codigo            
+        indent = "    "
+
+        codigoTranspilado.append("#include <stdio.h>\n")
+        codigoTranspilado.append("#include <math.h>\n")
+        codigoTranspilado.append("#include <string.h>\n\n")
+        codigoTranspilado.append("int main(){\n\n")
+
+        codigoTranspilado.append(indent + "int True = 1;\n")
+        codigoTranspilado.append(indent + "int False = 1;\n\n")
+
+        print("imprimindo tabela de variaveis {}:".format(self._varTable._hashTable))
+        for x in self._varTable._hashTable.values():
+            print(x)
+
+        # talvez precise passar a indentacao para o generate...
+        for x in self._varTable._hashTable.values():
+            codigoTranspilado.append( x.generateCCode(indent))
+
+        for y in self._comandos:
+            codigoTranspilado.append( y.generateCCode(indent))
+
+        
+        codigoTranspilado.append("\n\n    return 0;\n\n")
+        codigoTranspilado.append("}\n")
+
+
+        resultado = "".join(codigoTranspilado)
+
+        # cria arquivo com o codigo final
+        filename = "results/" + outputname
+
+        print("Resultado salvo em: {}".format(filename))
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+        with open(filename, "w") as f:
+            f.write(resultado)
+
+        return resultado
+
