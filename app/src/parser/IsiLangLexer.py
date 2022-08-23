@@ -157,8 +157,8 @@ class IsiLangLexer(Lexer):
       if var.getType() != self._exprType and self._exprType != "any":
         raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
-    def generatePyCode(self):
-        return self._isiProgram.generatePyTarget()
+    def generatePyCode(self, outputname="stdOutput.py"):
+        return self._isiProgram.generatePyTarget(outputname)
          
 
 

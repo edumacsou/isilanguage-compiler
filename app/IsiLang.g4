@@ -27,8 +27,8 @@ def checkVarType(self, var):
   if var.getType() != self._exprType and self._exprType != "any":
     raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
-def generatePyCode(self):
-    return self._isiProgram.generatePyTarget()
+def generatePyCode(self, outputname="stdOutput.py"):
+    return self._isiProgram.generatePyTarget(outputname)
      
 }
 
@@ -101,11 +101,11 @@ self._stack.append(self._curThread)
 		;
 
 
-cmd		:  cmdleitura   {print("Reconhecido comando de leitura!")    } 
- 		|  cmdescrita   {print("Reconhecido comando de escrita!")  }
- 		|  cmdattrib    {print("Reconhecido comando de atribuicao!") ## Precisa checar tipo da variável antes da atribuição}
- 		|  cmdselecao   {print("Reconhecido comando de selecao!") ## Precisa checar tipo da variável na condicional }
- 		|  cmdenquanto  {print("Reconhecido comando de enquanto!") ## Mas checagem na condicional }
+cmd		:  cmdleitura 
+ 		|  cmdescrita 
+ 		|  cmdattrib  
+ 		|  cmdselecao 
+ 		|  cmdenquanto
 		;
 
 cmdleitura	: 'leia' AP

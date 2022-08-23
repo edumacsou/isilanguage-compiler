@@ -1,13 +1,13 @@
 programa
 
   numero a, b, c;
-  texto  t1;
+  texto  t1, t2;
 
   leia(a);
   leia(b);
 
   t1 = "Meu Teste";
-  a = 1 + 2 * 3 / b;
+  a = 1 + 2 * a;
   c = 5.755;
 
   escreva(t1);

@@ -18,25 +18,24 @@ from isiProgram import IsiProgram, AbstractCommand, ReadCommand, WriteCommand, A
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30")
-        buf.write("\u00af\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\u00a5\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\3\6\3%\n\3\r\3\16")
         buf.write("\3&\3\4\3\4\3\4\3\4\3\4\3\4\7\4/\n\4\f\4\16\4\62\13\4")
         buf.write("\3\4\3\4\3\5\3\5\3\5\3\5\5\5:\n\5\3\6\3\6\6\6>\n\6\r\6")
-        buf.write("\16\6?\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7")
-        buf.write("\3\7\3\7\3\7\5\7Q\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b")
-        buf.write("\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3")
-        buf.write("\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13")
-        buf.write("\3\13\3\13\3\13\3\13\6\13x\n\13\r\13\16\13y\3\13\3\13")
-        buf.write("\3\13\3\13\3\13\3\13\6\13\u0082\n\13\r\13\16\13\u0083")
-        buf.write("\3\13\3\13\3\13\5\13\u0089\n\13\3\f\3\f\3\f\3\f\3\f\3")
-        buf.write("\f\3\f\3\f\3\f\3\f\3\f\3\f\6\f\u0097\n\f\r\f\16\f\u0098")
-        buf.write("\3\f\3\f\3\f\3\r\3\r\3\r\3\r\7\r\u00a2\n\r\f\r\16\r\u00a5")
-        buf.write("\13\r\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00ad\n\16\3")
-        buf.write("\16\2\2\17\2\4\6\b\n\f\16\20\22\24\26\30\32\2\2\2\u00b0")
+        buf.write("\16\6?\3\7\3\7\3\7\3\7\3\7\5\7G\n\7\3\b\3\b\3\b\3\b\3")
+        buf.write("\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\n")
+        buf.write("\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13")
+        buf.write("\3\13\3\13\3\13\3\13\3\13\3\13\3\13\6\13n\n\13\r\13\16")
+        buf.write("\13o\3\13\3\13\3\13\3\13\3\13\3\13\6\13x\n\13\r\13\16")
+        buf.write("\13y\3\13\3\13\3\13\5\13\177\n\13\3\f\3\f\3\f\3\f\3\f")
+        buf.write("\3\f\3\f\3\f\3\f\3\f\3\f\3\f\6\f\u008d\n\f\r\f\16\f\u008e")
+        buf.write("\3\f\3\f\3\f\3\r\3\r\3\r\3\r\7\r\u0098\n\r\f\r\16\r\u009b")
+        buf.write("\13\r\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00a3\n\16\3")
+        buf.write("\16\2\2\17\2\4\6\b\n\f\16\20\22\24\26\30\32\2\2\2\u00a6")
         buf.write("\2\34\3\2\2\2\4$\3\2\2\2\6(\3\2\2\2\b9\3\2\2\2\n;\3\2")
-        buf.write("\2\2\fP\3\2\2\2\16R\3\2\2\2\20Z\3\2\2\2\22c\3\2\2\2\24")
-        buf.write("k\3\2\2\2\26\u008a\3\2\2\2\30\u009d\3\2\2\2\32\u00ac\3")
+        buf.write("\2\2\fF\3\2\2\2\16H\3\2\2\2\20P\3\2\2\2\22Y\3\2\2\2\24")
+        buf.write("a\3\2\2\2\26\u0080\3\2\2\2\30\u0093\3\2\2\2\32\u00a2\3")
         buf.write("\2\2\2\34\35\b\2\1\2\35\36\7\3\2\2\36\37\5\4\3\2\37 \5")
         buf.write("\n\6\2 !\7\4\2\2!\"\b\2\1\2\"\3\3\2\2\2#%\5\6\4\2$#\3")
         buf.write("\2\2\2%&\3\2\2\2&$\3\2\2\2&\'\3\2\2\2\'\5\3\2\2\2()\5")
@@ -46,40 +45,36 @@ def serializedATN():
         buf.write("\2\2\65\66\7\5\2\2\66:\b\5\1\2\678\7\6\2\28:\b\5\1\29")
         buf.write("\65\3\2\2\29\67\3\2\2\2:\t\3\2\2\2;=\b\6\1\2<>\5\f\7\2")
         buf.write("=<\3\2\2\2>?\3\2\2\2?=\3\2\2\2?@\3\2\2\2@\13\3\2\2\2A")
-        buf.write("B\5\16\b\2BC\b\7\1\2CQ\3\2\2\2DE\5\20\t\2EF\b\7\1\2FQ")
-        buf.write("\3\2\2\2GH\5\22\n\2HI\b\7\1\2IQ\3\2\2\2JK\5\24\13\2KL")
-        buf.write("\b\7\1\2LQ\3\2\2\2MN\5\26\f\2NO\b\7\1\2OQ\3\2\2\2PA\3")
-        buf.write("\2\2\2PD\3\2\2\2PG\3\2\2\2PJ\3\2\2\2PM\3\2\2\2Q\r\3\2")
-        buf.write("\2\2RS\7\7\2\2ST\7\f\2\2TU\7\25\2\2UV\b\b\1\2VW\7\r\2")
-        buf.write("\2WX\7\16\2\2XY\b\b\1\2Y\17\3\2\2\2Z[\7\b\2\2[\\\b\t\1")
-        buf.write("\2\\]\7\f\2\2]^\5\32\16\2^_\b\t\1\2_`\7\r\2\2`a\7\16\2")
-        buf.write("\2ab\b\t\1\2b\21\3\2\2\2cd\7\25\2\2de\b\n\1\2ef\7\20\2")
-        buf.write("\2fg\b\n\1\2gh\5\30\r\2hi\7\16\2\2ij\b\n\1\2j\23\3\2\2")
-        buf.write("\2kl\7\t\2\2lm\7\f\2\2mn\7\25\2\2no\b\13\1\2op\7\24\2")
-        buf.write("\2pq\b\13\1\2qr\5\32\16\2rs\b\13\1\2st\7\r\2\2tu\7\22")
-        buf.write("\2\2uw\b\13\1\2vx\5\f\7\2wv\3\2\2\2xy\3\2\2\2yw\3\2\2")
-        buf.write("\2yz\3\2\2\2z{\3\2\2\2{|\7\23\2\2|\u0088\b\13\1\2}~\7")
-        buf.write("\n\2\2~\177\7\22\2\2\177\u0081\b\13\1\2\u0080\u0082\5")
-        buf.write("\f\7\2\u0081\u0080\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0081")
-        buf.write("\3\2\2\2\u0083\u0084\3\2\2\2\u0084\u0085\3\2\2\2\u0085")
-        buf.write("\u0086\7\23\2\2\u0086\u0087\b\13\1\2\u0087\u0089\3\2\2")
-        buf.write("\2\u0088}\3\2\2\2\u0088\u0089\3\2\2\2\u0089\25\3\2\2\2")
-        buf.write("\u008a\u008b\7\13\2\2\u008b\u008c\7\f\2\2\u008c\u008d")
-        buf.write("\7\25\2\2\u008d\u008e\b\f\1\2\u008e\u008f\7\24\2\2\u008f")
-        buf.write("\u0090\b\f\1\2\u0090\u0091\5\32\16\2\u0091\u0092\b\f\1")
-        buf.write("\2\u0092\u0093\7\r\2\2\u0093\u0094\7\22\2\2\u0094\u0096")
-        buf.write("\b\f\1\2\u0095\u0097\5\f\7\2\u0096\u0095\3\2\2\2\u0097")
-        buf.write("\u0098\3\2\2\2\u0098\u0096\3\2\2\2\u0098\u0099\3\2\2\2")
-        buf.write("\u0099\u009a\3\2\2\2\u009a\u009b\7\23\2\2\u009b\u009c")
-        buf.write("\b\f\1\2\u009c\27\3\2\2\2\u009d\u00a3\5\32\16\2\u009e")
-        buf.write("\u009f\7\17\2\2\u009f\u00a0\b\r\1\2\u00a0\u00a2\5\32\16")
-        buf.write("\2\u00a1\u009e\3\2\2\2\u00a2\u00a5\3\2\2\2\u00a3\u00a1")
-        buf.write("\3\2\2\2\u00a3\u00a4\3\2\2\2\u00a4\31\3\2\2\2\u00a5\u00a3")
-        buf.write("\3\2\2\2\u00a6\u00a7\7\25\2\2\u00a7\u00ad\b\16\1\2\u00a8")
-        buf.write("\u00a9\7\26\2\2\u00a9\u00ad\b\16\1\2\u00aa\u00ab\7\27")
-        buf.write("\2\2\u00ab\u00ad\b\16\1\2\u00ac\u00a6\3\2\2\2\u00ac\u00a8")
-        buf.write("\3\2\2\2\u00ac\u00aa\3\2\2\2\u00ad\33\3\2\2\2\r&\609?")
-        buf.write("Py\u0083\u0088\u0098\u00a3\u00ac")
+        buf.write("G\5\16\b\2BG\5\20\t\2CG\5\22\n\2DG\5\24\13\2EG\5\26\f")
+        buf.write("\2FA\3\2\2\2FB\3\2\2\2FC\3\2\2\2FD\3\2\2\2FE\3\2\2\2G")
+        buf.write("\r\3\2\2\2HI\7\7\2\2IJ\7\f\2\2JK\7\25\2\2KL\b\b\1\2LM")
+        buf.write("\7\r\2\2MN\7\16\2\2NO\b\b\1\2O\17\3\2\2\2PQ\7\b\2\2QR")
+        buf.write("\b\t\1\2RS\7\f\2\2ST\5\32\16\2TU\b\t\1\2UV\7\r\2\2VW\7")
+        buf.write("\16\2\2WX\b\t\1\2X\21\3\2\2\2YZ\7\25\2\2Z[\b\n\1\2[\\")
+        buf.write("\7\20\2\2\\]\b\n\1\2]^\5\30\r\2^_\7\16\2\2_`\b\n\1\2`")
+        buf.write("\23\3\2\2\2ab\7\t\2\2bc\7\f\2\2cd\7\25\2\2de\b\13\1\2")
+        buf.write("ef\7\24\2\2fg\b\13\1\2gh\5\32\16\2hi\b\13\1\2ij\7\r\2")
+        buf.write("\2jk\7\22\2\2km\b\13\1\2ln\5\f\7\2ml\3\2\2\2no\3\2\2\2")
+        buf.write("om\3\2\2\2op\3\2\2\2pq\3\2\2\2qr\7\23\2\2r~\b\13\1\2s")
+        buf.write("t\7\n\2\2tu\7\22\2\2uw\b\13\1\2vx\5\f\7\2wv\3\2\2\2xy")
+        buf.write("\3\2\2\2yw\3\2\2\2yz\3\2\2\2z{\3\2\2\2{|\7\23\2\2|}\b")
+        buf.write("\13\1\2}\177\3\2\2\2~s\3\2\2\2~\177\3\2\2\2\177\25\3\2")
+        buf.write("\2\2\u0080\u0081\7\13\2\2\u0081\u0082\7\f\2\2\u0082\u0083")
+        buf.write("\7\25\2\2\u0083\u0084\b\f\1\2\u0084\u0085\7\24\2\2\u0085")
+        buf.write("\u0086\b\f\1\2\u0086\u0087\5\32\16\2\u0087\u0088\b\f\1")
+        buf.write("\2\u0088\u0089\7\r\2\2\u0089\u008a\7\22\2\2\u008a\u008c")
+        buf.write("\b\f\1\2\u008b\u008d\5\f\7\2\u008c\u008b\3\2\2\2\u008d")
+        buf.write("\u008e\3\2\2\2\u008e\u008c\3\2\2\2\u008e\u008f\3\2\2\2")
+        buf.write("\u008f\u0090\3\2\2\2\u0090\u0091\7\23\2\2\u0091\u0092")
+        buf.write("\b\f\1\2\u0092\27\3\2\2\2\u0093\u0099\5\32\16\2\u0094")
+        buf.write("\u0095\7\17\2\2\u0095\u0096\b\r\1\2\u0096\u0098\5\32\16")
+        buf.write("\2\u0097\u0094\3\2\2\2\u0098\u009b\3\2\2\2\u0099\u0097")
+        buf.write("\3\2\2\2\u0099\u009a\3\2\2\2\u009a\31\3\2\2\2\u009b\u0099")
+        buf.write("\3\2\2\2\u009c\u009d\7\25\2\2\u009d\u00a3\b\16\1\2\u009e")
+        buf.write("\u009f\7\26\2\2\u009f\u00a3\b\16\1\2\u00a0\u00a1\7\27")
+        buf.write("\2\2\u00a1\u00a3\b\16\1\2\u00a2\u009c\3\2\2\2\u00a2\u009e")
+        buf.write("\3\2\2\2\u00a2\u00a0\3\2\2\2\u00a3\33\3\2\2\2\r&\609?")
+        buf.write("Foy~\u008e\u0099\u00a2")
         return buf.getvalue()
 
 
@@ -170,8 +165,8 @@ class IsiLangParser ( Parser ):
       if var.getType() != self._exprType and self._exprType != "any":
         raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
 
-    def generatePyCode(self):
-        return self._isiProgram.generatePyTarget()
+    def generatePyCode(self, outputname="stdOutput.py"):
+        return self._isiProgram.generatePyTarget(outputname)
          
 
 
@@ -555,38 +550,33 @@ class IsiLangParser ( Parser ):
         localctx = IsiLangParser.CmdContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_cmd)
         try:
-            self.state = 78
+            self.state = 68
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [IsiLangParser.T__4]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 63
                 self.cmdleitura()
-                print("Reconhecido comando de leitura!")    
                 pass
             elif token in [IsiLangParser.T__5]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 66
+                self.state = 64
                 self.cmdescrita()
-                print("Reconhecido comando de escrita!")  
                 pass
             elif token in [IsiLangParser.ID]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 69
+                self.state = 65
                 self.cmdattrib()
-                print("Reconhecido comando de atribuicao!") ## Precisa checar tipo da variável antes da atribuição
                 pass
             elif token in [IsiLangParser.T__6]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 72
+                self.state = 66
                 self.cmdselecao()
-                print("Reconhecido comando de selecao!") ## Precisa checar tipo da variável na condicional 
                 pass
             elif token in [IsiLangParser.T__8]:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 75
+                self.state = 67
                 self.cmdenquanto()
-                print("Reconhecido comando de enquanto!") ## Mas checagem na condicional 
                 pass
             else:
                 raise NoViableAltException(self)
@@ -638,19 +628,19 @@ class IsiLangParser ( Parser ):
         self.enterRule(localctx, 12, self.RULE_cmdleitura)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 80
+            self.state = 70
             self.match(IsiLangParser.T__4)
-            self.state = 81
+            self.state = 71
             self.match(IsiLangParser.AP)
-            self.state = 82
+            self.state = 72
             self.match(IsiLangParser.ID)
 
             self.checkVar(self._ctx.getChild(-1).getText())
             self._readIDCommand = str(self._ctx.getChild(-1))
 
-            self.state = 84
+            self.state = 74
             self.match(IsiLangParser.FP)
-            self.state = 85
+            self.state = 75
             self.match(IsiLangParser.SC)
 
             cmd = ReadCommand(self._readIDCommand, self._symbolTable.get(self._readIDCommand))
@@ -704,20 +694,20 @@ class IsiLangParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_cmdescrita)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 88
+            self.state = 78
             self.match(IsiLangParser.T__5)
             self._exprType = "any"
-            self.state = 90
+            self.state = 80
             self.match(IsiLangParser.AP)
-            self.state = 91
+            self.state = 81
             self.termo()
 
             varName = self._ctx.getChild(-1).getText()
             self._readIDCommand = str(varName)
 
-            self.state = 93
+            self.state = 83
             self.match(IsiLangParser.FP)
-            self.state = 94
+            self.state = 84
             self.match(IsiLangParser.SC)
 
             cmd = WriteCommand(self._readIDCommand)
@@ -771,7 +761,7 @@ class IsiLangParser ( Parser ):
         self.enterRule(localctx, 16, self.RULE_cmdattrib)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 97
+            self.state = 87
             self.match(IsiLangParser.ID)
 
             varName = self._ctx.getChild(-1).getText()
@@ -779,14 +769,14 @@ class IsiLangParser ( Parser ):
             self._exprID = varName
             self._exprType = self._symbolTable.get(varName).getType()
 
-            self.state = 99
+            self.state = 89
             self.match(IsiLangParser.ATTR)
 
             self._exprContent = ""
                            
-            self.state = 101
+            self.state = 91
             self.expr()
-            self.state = 102
+            self.state = 92
             self.match(IsiLangParser.SC)
 
             cmd = AttribCommand(self._exprID, self._exprContent)
@@ -863,11 +853,11 @@ class IsiLangParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 105
+            self.state = 95
             self.match(IsiLangParser.T__6)
-            self.state = 106
+            self.state = 96
             self.match(IsiLangParser.AP)
-            self.state = 107
+            self.state = 97
             self.match(IsiLangParser.ID)
 
             varName = self._ctx.getChild(-1).getText()
@@ -875,49 +865,49 @@ class IsiLangParser ( Parser ):
             self._exprDecision = varName
             self._exprType = self._symbolTable.get(varName).getType()
 
-            self.state = 109
+            self.state = 99
             self.match(IsiLangParser.OPREL)
 
             self._exprDecision += self._ctx.getChild(-1).getText()
 
-            self.state = 111
+            self.state = 101
             self.termo()
 
             self._exprDecision += self._ctx.getChild(-1).getText()
 
-            self.state = 113
+            self.state = 103
             self.match(IsiLangParser.FP)
-            self.state = 114
+            self.state = 104
             self.match(IsiLangParser.ACH)
 
 
             self._curThread = []
             self._stack.append(self._curThread)
 
-            self.state = 117 
+            self.state = 107 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 116
+                self.state = 106
                 self.cmd()
-                self.state = 119 
+                self.state = 109 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.T__4) | (1 << IsiLangParser.T__5) | (1 << IsiLangParser.T__6) | (1 << IsiLangParser.T__8) | (1 << IsiLangParser.ID))) != 0)):
                     break
 
-            self.state = 121
+            self.state = 111
             self.match(IsiLangParser.FCH)
 
             self._trueList = self._stack.pop()
 
-            self.state = 134
+            self.state = 124
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==IsiLangParser.T__7:
-                self.state = 123
+                self.state = 113
                 self.match(IsiLangParser.T__7)
-                self.state = 124
+                self.state = 114
                 self.match(IsiLangParser.ACH)
 
 
@@ -925,19 +915,19 @@ class IsiLangParser ( Parser ):
                 self._stack.append(self._curThread)
 
 
-                self.state = 127 
+                self.state = 117 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 126
+                    self.state = 116
                     self.cmd()
-                    self.state = 129 
+                    self.state = 119 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.T__4) | (1 << IsiLangParser.T__5) | (1 << IsiLangParser.T__6) | (1 << IsiLangParser.T__8) | (1 << IsiLangParser.ID))) != 0)):
                         break
 
-                self.state = 131
+                self.state = 121
                 self.match(IsiLangParser.FCH)
 
                 self._falseList = self._stack.pop()
@@ -1011,11 +1001,11 @@ class IsiLangParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 136
+            self.state = 126
             self.match(IsiLangParser.T__8)
-            self.state = 137
+            self.state = 127
             self.match(IsiLangParser.AP)
-            self.state = 138
+            self.state = 128
             self.match(IsiLangParser.ID)
 
             varName = self._ctx.getChild(-1).getText()
@@ -1023,38 +1013,38 @@ class IsiLangParser ( Parser ):
             self._exprDecision = varName
             self._exprType = self._symbolTable.get(varName).getType()
 
-            self.state = 140
+            self.state = 130
             self.match(IsiLangParser.OPREL)
 
             self._exprDecision += self._ctx.getChild(-1).getText()
 
-            self.state = 142
+            self.state = 132
             self.termo()
 
             self._exprDecision += self._ctx.getChild(-1).getText()
 
-            self.state = 144
+            self.state = 134
             self.match(IsiLangParser.FP)
-            self.state = 145
+            self.state = 135
             self.match(IsiLangParser.ACH)
 
 
             self._curThread = []
             self._stack.append(self._curThread)
 
-            self.state = 148 
+            self.state = 138 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 147
+                self.state = 137
                 self.cmd()
-                self.state = 150 
+                self.state = 140 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.T__4) | (1 << IsiLangParser.T__5) | (1 << IsiLangParser.T__6) | (1 << IsiLangParser.T__8) | (1 << IsiLangParser.ID))) != 0)):
                     break
 
-            self.state = 152
+            self.state = 142
             self.match(IsiLangParser.FCH)
 
             self._cmdList = self._stack.pop()
@@ -1110,20 +1100,20 @@ class IsiLangParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 155
+            self.state = 145
             self.termo()
-            self.state = 161
+            self.state = 151
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==IsiLangParser.OP:
-                self.state = 156
+                self.state = 146
                 self.match(IsiLangParser.OP)
 
                 self._exprContent += self._ctx.getChild(-1).getText() 
                                   
-                self.state = 158
+                self.state = 148
                 self.termo()
-                self.state = 163
+                self.state = 153
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1170,12 +1160,12 @@ class IsiLangParser ( Parser ):
         localctx = IsiLangParser.TermoContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_termo)
         try:
-            self.state = 170
+            self.state = 160
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [IsiLangParser.ID]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 164
+                self.state = 154
                 self.match(IsiLangParser.ID)
 
                 varName = self._ctx.getChild(-1).getText()
@@ -1186,7 +1176,7 @@ class IsiLangParser ( Parser ):
                 pass
             elif token in [IsiLangParser.NUMBER]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 166
+                self.state = 156
                 self.match(IsiLangParser.NUMBER)
 
                 varName = self._ctx.getChild(-1).getText()
@@ -1196,7 +1186,7 @@ class IsiLangParser ( Parser ):
                 pass
             elif token in [IsiLangParser.TEXT]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 168
+                self.state = 158
                 self.match(IsiLangParser.TEXT)
 
                 varName = self._ctx.getChild(-1).getText()

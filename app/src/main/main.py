@@ -9,17 +9,19 @@ from src.parser.IsiLangParser import IsiLangParser
 
 def main():
     input_txt = FileStream(f'{ROOT_PATH}/input.txt')
+    outputname = os.path.basename(input_txt.fileName).split('.')[0].split('\\')[-1]
+
     lexer = IsiLangLexer(input_txt)
     stream = CommonTokenStream(lexer)
     parser = IsiLangParser(stream)
     tree = parser.prog()
-    print(tree.toStringTree(recog=parser))
+    #print(tree.toStringTree(recog=parser))
 
-    print(parser._isiProgram)
+    #print(parser._isiProgram)
 
-    print("\n\nTentativa de gerar o codigo em python:\n\n")
+    print("\n\nCodigo isiLanguage compilado em Python:\n\n")
 
-    print(parser.generatePyCode())
+    print(parser.generatePyCode(outputname+".py"))
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 # Definicao da classe que ira representar o programa em memoria
 
+from token import NUMBER
 from isiVariable import IsiVariable
 from isiSymbolTable import IsiSymbolTable
 import os
@@ -21,8 +22,10 @@ class ReadCommand(AbstractCommand):
 
     def generatePythonCode(self, fIndent=""):
         
-        return fIndent + "{} = input()\n".format(self._identificador)
-
+        if (self._var.getType() == IsiVariable.NUMBER):
+            return fIndent + "{} = float(input())\n".format(self._identificador)
+        else:
+            return fIndent + "{} = input()\n".format(self._identificador)
 
 class WriteCommand(AbstractCommand):
 
@@ -141,7 +144,7 @@ class IsiProgram():
             programa.append("Comando = {}\n".format(x))
         return "".join(programa)
 
-    def generatePyTarget(self):
+    def generatePyTarget(self, outputname="stdOutput.py"):
 
         codigoTranspilado = []
         # para indentar corretamente o codigo
@@ -162,8 +165,9 @@ class IsiProgram():
         resultado = "".join(codigoTranspilado)
 
         # cria arquivo com o codigo final
-        filename = "results/output.py"
+        filename = "results/" + outputname
 
+        print("Resultado salvo em: {}".format(filename))
         os.makedirs(os.path.dirname(filename), exist_ok=True)
 
         with open(filename, "w") as f:
