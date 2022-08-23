@@ -48,12 +48,12 @@ def serializedATN():
         buf.write("\3\25\3\26\3\26\3\26\3\26\7\26\u0126\n\26\f\26\16\26\u0129")
         buf.write("\13\26\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\5\27\u0133")
         buf.write("\n\27\3\30\3\30\3\30\3\30\2\2\31\2\4\6\b\n\f\16\20\22")
-        buf.write("\24\26\30\32\34\36 \"$&(*,.\2\3\4\2\26\26\30\31\2\u0144")
-        buf.write("\2\60\3\2\2\2\48\3\2\2\2\6<\3\2\2\2\bO\3\2\2\2\nQ\3\2")
-        buf.write("\2\2\fa\3\2\2\2\16c\3\2\2\2\20k\3\2\2\2\22u\3\2\2\2\24")
-        buf.write("\u0082\3\2\2\2\26\u008b\3\2\2\2\30\u008d\3\2\2\2\32\u009f")
-        buf.write("\3\2\2\2\34\u00b1\3\2\2\2\36\u00ca\3\2\2\2 \u00cc\3\2")
-        buf.write("\2\2\"\u00db\3\2\2\2$\u00e5\3\2\2\2&\u00ed\3\2\2\2(\u010e")
+        buf.write("\24\26\30\32\34\36 \"$&(*,.\2\3\3\2\26\31\2\u0144\2\60")
+        buf.write("\3\2\2\2\48\3\2\2\2\6<\3\2\2\2\bO\3\2\2\2\nQ\3\2\2\2\f")
+        buf.write("a\3\2\2\2\16c\3\2\2\2\20k\3\2\2\2\22u\3\2\2\2\24\u0082")
+        buf.write("\3\2\2\2\26\u008b\3\2\2\2\30\u008d\3\2\2\2\32\u009f\3")
+        buf.write("\2\2\2\34\u00b1\3\2\2\2\36\u00ca\3\2\2\2 \u00cc\3\2\2")
+        buf.write("\2\"\u00db\3\2\2\2$\u00e5\3\2\2\2&\u00ed\3\2\2\2(\u010e")
         buf.write("\3\2\2\2*\u0121\3\2\2\2,\u0132\3\2\2\2.\u0134\3\2\2\2")
         buf.write("\60\61\b\2\1\2\61\62\7\3\2\2\62\63\5\4\3\2\63\64\5\n\6")
         buf.write("\2\64\65\7\4\2\2\65\66\b\2\1\2\66\3\3\2\2\2\679\5\6\4")
@@ -1359,6 +1359,9 @@ class IsiLangParser ( Parser ):
         def NUMBER(self):
             return self.getToken(IsiLangParser.NUMBER, 0)
 
+        def ID(self):
+            return self.getToken(IsiLangParser.ID, 0)
+
         def getRuleIndex(self):
             return IsiLangParser.RULE_invalidcmdselecaocond
 
@@ -1387,10 +1390,10 @@ class IsiLangParser ( Parser ):
             self.state = 178
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.ID) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0):
                 self.state = 177
                 _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0)):
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.ID) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -1536,6 +1539,9 @@ class IsiLangParser ( Parser ):
         def NUMBER(self):
             return self.getToken(IsiLangParser.NUMBER, 0)
 
+        def ID(self):
+            return self.getToken(IsiLangParser.ID, 0)
+
         def getRuleIndex(self):
             return IsiLangParser.RULE_invalidcmdenquantocond
 
@@ -1564,10 +1570,10 @@ class IsiLangParser ( Parser ):
             self.state = 205
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.ID) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0):
                 self.state = 204
                 _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0)):
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << IsiLangParser.BOOL) | (1 << IsiLangParser.ID) | (1 << IsiLangParser.NUMBER) | (1 << IsiLangParser.TEXT))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)

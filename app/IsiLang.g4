@@ -169,13 +169,13 @@ invalidcmdselecaocmdv : 'se' AP ID OPREL termo FP ACH FCH{raise IsiSemanticExcep
 invalidcmdselecaocmdf : 'se' AP ID OPREL termo FP ACH (cmd)+ FCH 'senao' ACH FCH{raise IsiSemanticException("Erro Semantico! Comando de selecao, com uso de SENAO, sem comando para condicao == Falso !!")}
                   ;
 
-invalidcmdselecaocond : 'se' AP (TEXT | BOOL | NUMBER)? FP{raise IsiSemanticException("Erro Semantico! Comando de selecao sem condicao de verificacao, ou condicao mal formulada!!")} ACH (cmd)+ FCH ('senao' ACH (cmd)+ FCH)
+invalidcmdselecaocond : 'se' AP (TEXT | BOOL | NUMBER | ID)? FP{raise IsiSemanticException("Erro Semantico! Comando de selecao sem condicao de verificacao, ou condicao mal formulada!!")} ACH (cmd)+ FCH ('senao' ACH (cmd)+ FCH)
                   ;
 
 invalidcmdenquanto : invalidcmdenquantocond | invalidcmdenquantocmd
                    ;
 
-invalidcmdenquantocond :  'enquanto' AP (TEXT | BOOL | NUMBER)? FP{raise IsiSemanticException("Erro Semantico! Comando Enquanto sem condicao de verificacao, ou condicao mal formulada!!")} ACH (cmd)+ FCH
+invalidcmdenquantocond :  'enquanto' AP (TEXT | BOOL | NUMBER | ID)? FP{raise IsiSemanticException("Erro Semantico! Comando Enquanto sem condicao de verificacao, ou condicao mal formulada!!")} ACH (cmd)+ FCH
                        ;
 
 invalidcmdenquantocmd :   'enquanto' AP ID OPREL termo FP ACH FCH {raise IsiSemanticException("Erro Semantico! Comando Enquanto sem utilizacao de comandos internos, looping sem nenhuma utilidade!!")}
