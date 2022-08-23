@@ -24,13 +24,13 @@ A tabela abaixo retrata as instruções para a entrega do projeto:
 |---------------------------------------------------------------------------------|------------|
 | Possuir 2 tipos de dados (pelo menos 1 string)                                  | DONE       |
 | Possuir a instrução de decisão (if/else)                                        | DONE       |
-| Pelo menos 1 estrutura de repetição                                             | TODO       |
-| Verificar atribuições com compatibilidade de tipos (semântica)                  | TODO       |
+| Pelo menos 1 estrutura de repetição                                             | DONE       |
+| Verificar atribuições com compatibilidade de tipos (semântica)                  | DONE       |
 | Possuir operações de entrada e saída                                            | DONE       |
 | Aceitar números decimais                                                        | DONE       |
-| Verificar declaração de variávies (não usar variáveis que não foram declaradas) | TODO (EDU) |
-| Verificar se há variáveis declaradas e não utilizadas (warning)                 | TODO (EDU) |
-| Geração de pelo menos 1 linguagem destino (C/Java/Python)                       | TODO (HEN) |
+| Verificar declaração de variávies (não usar variáveis que não foram declaradas) | DONE       |
+| Verificar se há variáveis declaradas e não utilizadas (warning)                 | DONE       |
+| Geração de pelo menos 1 linguagem destino (Python)                              | DONE       |
 
 <br />
 
