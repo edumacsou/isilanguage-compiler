@@ -58,7 +58,11 @@ programa
          }
          escreva("teste");
 
-     }      
+     }
+     enquanto(a < b){
+         a = a + 1;
+         escreva(b);
+     }   
 
   }
 

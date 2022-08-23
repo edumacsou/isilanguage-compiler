@@ -37,6 +37,9 @@ def main():
            if(t1=="oi"):
                print(t1)
            print("teste")
+       while(a<b):
+          a = a+1
+          print(b)
 
 if __name__ == "__main__":
     main()
