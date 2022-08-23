@@ -1,13 +1,25 @@
 programa
 
-  numero a, b, c;
+  numero a, b, c, d;
   texto  t1, t2;
   booleano x;
 
   x = verdadeiro;
 
+  escreva("Escreva o numero a:\n");
   leia(a);
+  escreva("Escreva o numero b");
   leia(b);
+  escreva("Escreva o numero d");
+  leia(d);
+
+  d = d ** 2;
+  escreva("d ao quadrado:");
+  escreva(d);
+
+  d = d % 3;
+  escreva("d resto da divisao por 3:");
+  escreva(d);
 
   t1 = "Meu Teste";
   a = 1 + 2 * a;
@@ -17,7 +29,7 @@ programa
   escreva("Ola Mundo");
 
   se(x == verdadeiro){
-    escreva(t1);
+      escreva(t1);
   }
 
   se ( a > b ) {
