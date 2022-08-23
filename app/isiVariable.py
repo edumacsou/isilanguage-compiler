@@ -5,6 +5,7 @@ class IsiVariable(IsiSymbol):
 
     NUMBER = 0
     TEXT = 1
+    BOOL = 2
 
     def __init__(self, name: str, type, value, used):
         super().setName(name)
@@ -12,8 +13,18 @@ class IsiVariable(IsiSymbol):
         self.value = value
         self.used = False
 
+        if (self.type == IsiVariable.BOOL):
+            if(value == "verdadeiro"):
+                self.value = True
+            else:
+                self.value = False
+
     def getType(self):
         return self.type
+
+    def getTypeStr(self):
+        tipos = ["NUMBER", "TEXT", "BOOL"]
+        return tipos[self.getType()]
 
     def setType(self, type):
         self.type = type

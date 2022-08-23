@@ -1,5 +1,6 @@
 def main():
 
+    x = True
     a = float(input())
     b = float(input())
     t1 = "Meu Teste"
@@ -7,6 +8,8 @@ def main():
     c = 5.755
     print(t1)
     print("Ola Mundo")
+    if(x==True):
+        print(t1)
     if(a>b):
         print(a)
     else:

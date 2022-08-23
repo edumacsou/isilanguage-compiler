@@ -24,6 +24,8 @@ class ReadCommand(AbstractCommand):
         
         if (self._var.getType() == IsiVariable.NUMBER):
             return fIndent + "{} = float(input())\n".format(self._identificador)
+        elif (self._var.getType() == IsiVariable.BOOL):
+            return fIndent + "{} = bool(input())\n".format(self._identificador)
         else:
             return fIndent + "{} = input()\n".format(self._identificador)
 
@@ -46,6 +48,11 @@ class AttribCommand(AbstractCommand):
         self._identificador = id
         self._expr = expr
 
+        if(expr == "verdadeiro"):
+            self._expr = "True"
+        if(expr == "falso"):
+            self._expr = "False"
+
     def __str__(self):
         return "Attribuition Command[id = {}, expr = {}]\n".format(self._identificador, self._expr)
 
@@ -59,7 +66,10 @@ class DecisionCommand(AbstractCommand):
     def __init__(self, condition : str, tlist, flist):
         self._condition = condition
         self._trueList  = tlist
-        self._falseList = flist 
+        self._falseList = flist
+
+        self._condition = self._condition.replace('verdadeiro', 'True')
+        self._condition = self._condition.replace('falso', 'False') 
 
     def __str__(self):
         tlistText = [x.__str__() for x in self._trueList]

@@ -24,8 +24,8 @@ def checkVar(self, varName):
   self._symbolTable.setUsed(varName)
 
 def checkVarType(self, var):
-  if var.getType() != self._exprType and self._exprType != "any":
-    raise IsiSemanticException("Erro Semantico! Esperava variável '{}' do tipo {}, mas possui tipo {}! ".format(var.getName(), self._exprType, var.getType()))
+  if var.getTypeStr() != self._exprType and self._exprType != "any":
+    raise IsiSemanticException("Erro Semantico! Esperava valor do tipo {}, mas recebeu {}, que possui tipo {}! ".format( self._exprType, var.getName(), var.getTypeStr()))
 
 def generatePyCode(self, outputname="stdOutput.py"):
     return self._isiProgram.generatePyTarget(outputname)
@@ -47,6 +47,7 @@ self._trueList = []
 self._falseList = []
 self._cmdList   = []
 self._exprType = None
+self._elseCheck = False
 
 }
     'programa' decl bloco  'fimprog;'
@@ -90,6 +91,9 @@ self.setTipo(IsiVariable.NUMBER)
                     | 'texto'  {
 self.setTipo(IsiVariable.TEXT)
                     }
+                    | 'booleano'{
+self.setTipo(IsiVariable.BOOL) 
+}
            ;
 
 bloco	:
@@ -140,7 +144,7 @@ cmdattrib	:  ID {
 varName = self._ctx.getChild(-1).getText()
 self.checkVar(varName)
 self._exprID = varName
-self._exprType = self._symbolTable.get(varName).getType()
+self._exprType = self._symbolTable.get(varName).getTypeStr()
 }
                ATTR{
 self._exprContent = ""
@@ -158,7 +162,7 @@ cmdselecao  :  'se' AP
 varName = self._ctx.getChild(-1).getText()
 self.checkVar(varName)
 self._exprDecision = varName
-self._exprType = self._symbolTable.get(varName).getType()
+self._exprType = self._symbolTable.get(varName).getTypeStr()
 }
                     OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
@@ -168,7 +172,7 @@ self._exprDecision += self._ctx.getChild(-1).getText()
 }
                     FP
                     ACH{
-
+self._elseCheck = False
 self._curThread = []
 self._stack.append(self._curThread)
 }
@@ -179,7 +183,7 @@ self._trueList = self._stack.pop()
 }
                    ('senao'
                    	 ACH{
-
+self._elseCheck = True
 self._curThread = []
 self._stack.append(self._curThread)
 }
@@ -189,7 +193,14 @@ self._falseList = self._stack.pop()
 cmd = DecisionCommand(self._exprDecision, self._trueList, self._falseList)
 self._stack[-1].append(cmd)
 }
-                   )?
+                   )?{
+if(self._elseCheck == False):
+    cmd = DecisionCommand(self._exprDecision, self._trueList, [])
+    self._stack[-1].append(cmd)
+else:
+    self._elseCheck = False
+
+}
             ;
 
 cmdenquanto    : 'enquanto' AP
@@ -197,7 +208,7 @@ cmdenquanto    : 'enquanto' AP
 varName = self._ctx.getChild(-1).getText()
 self.checkVar(varName)
 self._exprDecision = varName
-self._exprType = self._symbolTable.get(varName).getType()
+self._exprType = self._symbolTable.get(varName).getTypeStr()
 }
                     OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
@@ -246,6 +257,12 @@ varName = self._ctx.getChild(-1).getText()
 self._exprContent += varName
 self.checkVarType(IsiVariable(f"Texto {varName}", IsiVariable.TEXT, varName, False))
             }
+            |
+               BOOL{
+varName = self._ctx.getChild(-1).getText()
+self._exprContent += varName
+self.checkVarType(IsiVariable(f"Bool {varName}", IsiVariable.BOOL, varName, False))               
+}
 			;
 
 
@@ -276,6 +293,9 @@ FCH  : '}'
 
 OPREL : '>' | '<' | '>=' | '<=' | '==' | '!='
       ;
+
+BOOL : 'verdadeiro' | 'falso'
+     ;
 
 ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 	;
