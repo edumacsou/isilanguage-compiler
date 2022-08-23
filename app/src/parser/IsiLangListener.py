@@ -134,3 +134,12 @@ class IsiLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by IsiLangParser#invalidelse.
+    def enterInvalidelse(self, ctx:IsiLangParser.InvalidelseContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidelse.
+    def exitInvalidelse(self, ctx:IsiLangParser.InvalidelseContext):
+        pass
+
+

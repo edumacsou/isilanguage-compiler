@@ -83,16 +83,18 @@ class DecisionCommand(AbstractCommand):
         indent = "    "
 
         decisiontxt.append("{}if({}):\n".format(fIndent, self._condition))
-
+        print("len de fIndent no if ({})= {}".format(self._condition, len(fIndent)))
         for x in self._trueList:
             #decisiontxt.append(fIndent + indent + x.generatePythonCode())
-            decisiontxt.append(fIndent + x.generatePythonCode(fIndent + indent))
+            decisiontxt.append(x.generatePythonCode(fIndent + indent))
+
         
         if(len(self._falseList ) != 0):
-            decisiontxt.append(fIndent + "else:\n")
+            print("len de fIndent no else ({})= {}".format(self._condition, len(fIndent)))
+            decisiontxt.append("{}else:\n".format(fIndent))
             for x in self._falseList:
                 #decisiontxt.append(fIndent + indent + x.generatePythonCode())
-                decisiontxt.append(fIndent + x.generatePythonCode(fIndent + indent))
+                decisiontxt.append(x.generatePythonCode(fIndent + indent))
 
         return "".join(decisiontxt)
 
@@ -119,7 +121,7 @@ class WhileCommand(AbstractCommand):
 
         for x in self._cmdList:
             #whiletxt.append(fIndent + indent + x.generatePythonCode())
-            whiletxt.append(fIndent + x.generatePythonCode(indent))
+            whiletxt.append(x.generatePythonCode(fIndent + indent))
 
         return "".join(whiletxt)
 

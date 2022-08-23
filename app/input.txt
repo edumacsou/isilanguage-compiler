@@ -30,7 +30,14 @@ programa
 
   se(x == verdadeiro){
       escreva(t1);
+      se(a < c){
+         escreva("a menor que c!");
+      }
+      senao{
+         escreva("c maior igual a A....");
+      }
   }
+
 
   se ( a > b ) {
      escreva (a);
@@ -42,6 +49,16 @@ programa
   enquanto ( a < b ) {
      a = a + 1;
      escreva(a);
+     se(a > c){
+       escreva("a maior que c!");
+     }
+     senao{
+         se(t1 == "oi"){
+            escreva(t1);
+         }
+         escreva("teste");
+
+     }      
 
   }
 

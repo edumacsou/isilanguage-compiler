@@ -19,14 +19,24 @@ def main():
     print(t1)
     print("Ola Mundo")
     if(x==True):
-            print(t1)
+        print(t1)
+        if(a<c):
+            print("a menor que c!")
+        else:
+            print("c maior igual a A....")
     if(a>b):
-            print(a)
+        print(a)
     else:
-            print(b)
+        print(b)
     while(a<b):
        a = a+1
        print(a)
+       if(a>c):
+           print(t1)
+       else:
+           if(t1=="oi"):
+               print(t1)
+           print("teste")
 
 if __name__ == "__main__":
     main()

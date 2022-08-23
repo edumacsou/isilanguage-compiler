@@ -43,11 +43,13 @@ self._stack = []   # pseudo stack usando lista, muito lento! Evoluir para uma im
 self._exprID = None
 self._exprContent = None
 self._exprDecision = None
+self._exprDecisionStack = []
 self._trueList = []
 self._falseList = []
 self._cmdList   = []
 self._exprType = None
 self._elseCheck = False
+self._elseCheckStack = []
 
 }
     'programa' decl bloco  'fimprog;'
@@ -110,6 +112,7 @@ cmd		:  cmdleitura
  		|  cmdattrib  
  		|  cmdselecao 
  		|  cmdenquanto
+          |  invalidelse
 		;
 
 cmdleitura	: 'leia' AP
@@ -172,7 +175,9 @@ self._exprDecision += self._ctx.getChild(-1).getText()
 }
                     FP
                     ACH{
+self._exprDecisionStack.append(self._exprDecision)
 self._elseCheck = False
+self._elseCheckStack.append(False)
 self._curThread = []
 self._stack.append(self._curThread)
 }
@@ -184,22 +189,22 @@ self._trueList = self._stack.pop()
                    ('senao'
                    	 ACH{
 self._elseCheck = True
+self._elseCheckStack[-1] = True
 self._curThread = []
 self._stack.append(self._curThread)
 }
                    	(cmd+)
                    	FCH{
 self._falseList = self._stack.pop()
-cmd = DecisionCommand(self._exprDecision, self._trueList, self._falseList)
+cmd = DecisionCommand(self._exprDecisionStack.pop(), self._trueList, self._falseList)
 self._stack[-1].append(cmd)
 }
                    )?{
-if(self._elseCheck == False):
-    cmd = DecisionCommand(self._exprDecision, self._trueList, [])
+if(self._elseCheckStack.pop() == False):
+    cmd = DecisionCommand(self._exprDecisionStack.pop(), self._trueList, [])
     self._stack[-1].append(cmd)
 else:
     self._elseCheck = False
-
 }
             ;
 
@@ -218,14 +223,14 @@ self._exprDecision += self._ctx.getChild(-1).getText()
 }
                     FP
                     ACH{
-
+self._exprDecisionStack.append(self._exprDecision)
 self._curThread = []
 self._stack.append(self._curThread)
 }
                     (cmd)+
                     FCH{
 self._cmdList = self._stack.pop()
-cmd = WhileCommand(self._exprDecision, self._cmdList)
+cmd = WhileCommand(self._exprDecisionStack.pop(), self._cmdList)
 self._stack[-1].append(cmd)
 }
                ;
@@ -265,6 +270,12 @@ self.checkVarType(IsiVariable(f"Bool {varName}", IsiVariable.BOOL, varName, Fals
 }
 			;
 
+
+invalidelse : 'senao'
+{
+raise IsiSemanticException("Erro Semantico! Palavra reservada SENAO utilizada erroneamente antes do SE!") 
+}
+            ;
 
 AP	: '('
 	;
