@@ -78,7 +78,6 @@ A construção do analisador semântico para a linguagem de programação até e
   - As chamadas de funções devem ser feitas com o número e ordem de parâmetros corretos;
   - Retorno de funções deve ser do mesmo tipo declarado; 
   - Operações ```+``` ```-``` ```/``` ```*``` são compatíveis apenas com operandos inteiro e real;
-  - Operações ```++```  e ```--``` sucedem apenas tipos inteiros e reais;
   - Operações relacionais com operadores ```==``` ```!=``` podem ser feitas desde que os elementos envolvidos sejam do mesmo tipo;
   - Operações ```>``` ```<``` ```>=``` ```<=``` só podem ser feitas com os elementos do mesmo tipo;
   - As variáveis devem ser declaradas como locais ou globais;
