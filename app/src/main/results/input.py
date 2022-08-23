@@ -31,6 +31,10 @@ def main():
     while(a<b):
        a = a+1
        print(a)
+       if(a<b):
+           print("oi")
+       else:
+           print("oi")
        if(a>c):
            print(t1)
        else:

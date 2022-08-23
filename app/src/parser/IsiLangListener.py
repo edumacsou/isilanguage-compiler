@@ -89,6 +89,87 @@ class IsiLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by IsiLangParser#invalidcmd.
+    def enterInvalidcmd(self, ctx:IsiLangParser.InvalidcmdContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmd.
+    def exitInvalidcmd(self, ctx:IsiLangParser.InvalidcmdContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdleitura.
+    def enterInvalidcmdleitura(self, ctx:IsiLangParser.InvalidcmdleituraContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdleitura.
+    def exitInvalidcmdleitura(self, ctx:IsiLangParser.InvalidcmdleituraContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdselecao.
+    def enterInvalidcmdselecao(self, ctx:IsiLangParser.InvalidcmdselecaoContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdselecao.
+    def exitInvalidcmdselecao(self, ctx:IsiLangParser.InvalidcmdselecaoContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdselecaocmdv.
+    def enterInvalidcmdselecaocmdv(self, ctx:IsiLangParser.InvalidcmdselecaocmdvContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdselecaocmdv.
+    def exitInvalidcmdselecaocmdv(self, ctx:IsiLangParser.InvalidcmdselecaocmdvContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdselecaocmdf.
+    def enterInvalidcmdselecaocmdf(self, ctx:IsiLangParser.InvalidcmdselecaocmdfContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdselecaocmdf.
+    def exitInvalidcmdselecaocmdf(self, ctx:IsiLangParser.InvalidcmdselecaocmdfContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdselecaocond.
+    def enterInvalidcmdselecaocond(self, ctx:IsiLangParser.InvalidcmdselecaocondContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdselecaocond.
+    def exitInvalidcmdselecaocond(self, ctx:IsiLangParser.InvalidcmdselecaocondContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdenquanto.
+    def enterInvalidcmdenquanto(self, ctx:IsiLangParser.InvalidcmdenquantoContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdenquanto.
+    def exitInvalidcmdenquanto(self, ctx:IsiLangParser.InvalidcmdenquantoContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdenquantocond.
+    def enterInvalidcmdenquantocond(self, ctx:IsiLangParser.InvalidcmdenquantocondContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdenquantocond.
+    def exitInvalidcmdenquantocond(self, ctx:IsiLangParser.InvalidcmdenquantocondContext):
+        pass
+
+
+    # Enter a parse tree produced by IsiLangParser#invalidcmdenquantocmd.
+    def enterInvalidcmdenquantocmd(self, ctx:IsiLangParser.InvalidcmdenquantocmdContext):
+        pass
+
+    # Exit a parse tree produced by IsiLangParser#invalidcmdenquantocmd.
+    def exitInvalidcmdenquantocmd(self, ctx:IsiLangParser.InvalidcmdenquantocmdContext):
+        pass
+
+
     # Enter a parse tree produced by IsiLangParser#cmdattrib.
     def enterCmdattrib(self, ctx:IsiLangParser.CmdattribContext):
         pass

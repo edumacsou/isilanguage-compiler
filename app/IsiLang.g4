@@ -60,7 +60,7 @@ self._isiProgram.setCommands(self._stack.pop())
 }
       ;
 
-decl    :  (declaravar)+
+decl    : (declaravar)+
         ;
 
 
@@ -107,16 +107,22 @@ self._stack.append(self._curThread)
 		;
 
 
-cmd		:  cmdleitura 
- 		|  cmdescrita 
- 		|  cmdattrib  
+cmd		:  invalidcmdleitura
+          |  cmdleitura 
+ 		|  cmdescrita
+          |  invalidcmd
+          |  invalidcmdselecao  
+          |  invalidcmdenquanto
+ 		|  cmdattrib 
  		|  cmdselecao 
  		|  cmdenquanto
           |  invalidelse
+          
 		;
 
 cmdleitura	: 'leia' AP
                         ID {
+print("Deu pau aqui no leia?")
 self.checkVar(self._ctx.getChild(-1).getText())
 self._readIDCommand = str(self._ctx.getChild(-1))
 }
@@ -128,7 +134,7 @@ self._stack[-1].append(cmd)
 }
 			;
 
-cmdescrita	: 'escreva' {self._exprType = "any"}
+cmdescrita	: 'escreva' {self._exprType = "any"}{print("Deu pau aqui no escreva?")}
                  AP
                  termo
                  {
@@ -143,8 +149,43 @@ self._stack[-1].append(cmd)
 }
 			;
 
+invalidcmd : ID 
+{
+print("Comando nao reconhecido, subindo exception...")
+raise IsiSemanticException("Erro Semantico! Comando {} nao reconhecido ou mal utilizado!".format(self._ctx.getChild(-1).getText()))   
+}            AP(ID | NUMBER | expr | termo | TEXT) FP SC
+          ;
+
+invalidcmdleitura : 'leia' AP FP{raise IsiSemanticException("Erro Semantico! Comando de leitura sem uma variavel para armazenar a entrada do terminal !!")} SC
+                  ;
+
+
+invalidcmdselecao : invalidcmdselecaocond  | invalidcmdselecaocmdv | invalidcmdselecaocmdf
+                  ;
+
+invalidcmdselecaocmdv : 'se' AP ID OPREL termo FP ACH FCH{raise IsiSemanticException("Erro Semantico! Comando de selecao sem comando para condicao == Verdadeiro !!")} ('senao' ACH (cmd)+ FCH)
+                  ;
+
+invalidcmdselecaocmdf : 'se' AP ID OPREL termo FP ACH (cmd)+ FCH 'senao' ACH FCH{raise IsiSemanticException("Erro Semantico! Comando de selecao, com uso de SENAO, sem comando para condicao == Falso !!")}
+                  ;
+
+invalidcmdselecaocond : 'se' AP (TEXT | BOOL | NUMBER)? FP{raise IsiSemanticException("Erro Semantico! Comando de selecao sem condicao de verificacao, ou condicao mal formulada!!")} ACH (cmd)+ FCH ('senao' ACH (cmd)+ FCH)
+                  ;
+
+invalidcmdenquanto : invalidcmdenquantocond | invalidcmdenquantocmd
+                   ;
+
+invalidcmdenquantocond :  'enquanto' AP (TEXT | BOOL | NUMBER)? FP{raise IsiSemanticException("Erro Semantico! Comando Enquanto sem condicao de verificacao, ou condicao mal formulada!!")} ACH (cmd)+ FCH
+                       ;
+
+invalidcmdenquantocmd :   'enquanto' AP ID OPREL termo FP ACH FCH {raise IsiSemanticException("Erro Semantico! Comando Enquanto sem utilizacao de comandos internos, looping sem nenhuma utilidade!!")}
+                      ;
+
+
 cmdattrib	:  ID {
+print("Deu pau aqui no attrib?")
 varName = self._ctx.getChild(-1).getText()
+print("deu pau aqui vei: {}".format(varName))
 self.checkVar(varName)
 self._exprID = varName
 self._exprType = self._symbolTable.get(varName).getTypeStr()
@@ -167,7 +208,7 @@ self.checkVar(varName)
 self._exprDecision = varName
 self._exprType = self._symbolTable.get(varName).getTypeStr()
 }
-                    OPREL{
+                   OPREL{
 self._exprDecision += self._ctx.getChild(-1).getText()
 }
                     termo{
@@ -277,6 +318,8 @@ raise IsiSemanticException("Erro Semantico! Palavra reservada SENAO utilizada er
 }
             ;
 
+
+
 AP	: '('
 	;
 
@@ -316,6 +359,9 @@ NUMBER	: [0-9]+ ('.' [0-9]+)?
 
 TEXT : '"' (~["])* '"'
     ;
+
+NOTCMD : [a-z] ([a-z])*
+     ;
 
 WS	: (' ' | '\t' | '\n' | '\r') -> skip
      ;

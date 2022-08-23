@@ -46,9 +46,18 @@ programa
      escreva (b);
   }
 
-  enquanto ( a < b ) {
+  enquanto (a<b) {
      a = a + 1;
      escreva(a);
+     
+
+     se(a<b){
+         escreva("oi");
+     }
+     senao{
+         escreva("oi");
+     }
+
      se(a > c){
        escreva("a maior que c!");
      }
@@ -66,5 +75,7 @@ programa
 
   }
 
+   
+  
 
 fimprog;
