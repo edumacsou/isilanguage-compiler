@@ -44,8 +44,8 @@ Neste tópico, realizou-se a implementação de um analisador léxico, ou seja, 
 | Letra                                | ```(A..Z)``` ```(a..z)```                             |
 | Dígito                               | ```0..9```                                            |
 | Símbolo                              | ```ASCII de 32 a 126```                               |
-| Operadores                           | ```.``` ```+``` ```-``` ```*``` ```/``` ```++``` ```--``` ```=``` ```==``` ```!=``` ```>``` ```>=``` ```<``` ```<=``` ```&&``` ```pipe(ou)``` |
-| Delimitadores                        | ```,``` ```;``` ```( )``` ```{ }``` ```[ ]```         |
+| Operadores                           | ```+``` ```-``` ```*``` ```/``` ```=``` ```==``` ```!=``` ```>``` ```>=``` ```<``` ```<=``` |
+| Delimitadores                        | ```,``` ```;``` ```( )``` ```{ }```                   |
 | Comentário de Linha                  | ```// Este é um exemplo de comentário de linha. ```   |
 | Comentário de Bloco                  | ```/* Este é um exemplo de comentário de bloco. */``` |
 
