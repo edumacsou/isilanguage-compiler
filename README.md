@@ -46,8 +46,6 @@ Neste tópico, realizou-se a implementação de um analisador léxico, ou seja, 
 | Símbolo                              | ```ASCII de 32 a 126```                               |
 | Operadores                           | ```+``` ```-``` ```*``` ```/``` ```=``` ```==``` ```!=``` ```>``` ```>=``` ```<``` ```<=``` |
 | Delimitadores                        | ```,``` ```;``` ```( )``` ```{ }```                   |
-| Comentário de Linha                  | ```// Este é um exemplo de comentário de linha. ```   |
-| Comentário de Bloco                  | ```/* Este é um exemplo de comentário de bloco. */``` |
 
 <br />
 
