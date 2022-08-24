@@ -23,10 +23,12 @@ int main(){
     scanf("%f", &d);
     d = pow(d, 2);
     printf("d ao quadrado:");
-    printf("%f", d);
+    printf("%f\
+", d);
     d = (int)d%(int)3;
     printf("d resto da divisao por 3:");
-    printf("%f", d);
+    printf("%f\
+", d);
     strcpy(t1, "Meu Teste");
     a = 1+2*a;
     c = 5.755;
@@ -41,13 +43,16 @@ int main(){
         }
     }
     if(a>b){
-        printf("%f", a);
+        printf("%f\
+", a);
     }else{
-        printf("%f", b);
+        printf("%f\
+", b);
     }
     while(a<b){
        a = a+1;
-       printf("%f", a);
+       printf("%f\
+", a);
        if(a<b){
            printf("oi");
        }else{
@@ -63,7 +68,8 @@ int main(){
        }
        while(a<b){
           a = a+1;
-          printf("%f", b);
+          printf("%f\
+", b);
        }
     }
 
