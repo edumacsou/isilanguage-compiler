@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="71f6d282-5ce6-4543-88c3-8eb1074f6d62" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/parser/IsiLang.interp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/parser/IsiLang.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/parser/IsiLangLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/parser/IsiLangLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
