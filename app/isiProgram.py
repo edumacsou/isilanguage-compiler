@@ -257,7 +257,7 @@ class IsiProgram():
         # cria arquivo com o codigo final
         filename = "results/" + outputname
 
-        print("Resultado salvo em: {}".format(filename))
+        print("Resultado salvo em: {}\n\n".format(filename))
         os.makedirs(os.path.dirname(filename), exist_ok=True)
 
         with open(filename, "w") as f:
@@ -279,10 +279,6 @@ class IsiProgram():
         codigoTranspilado.append(indent + "int True = 1;\n")
         codigoTranspilado.append(indent + "int False = 1;\n\n")
 
-        print("imprimindo tabela de variaveis {}:".format(self._varTable._hashTable))
-        for x in self._varTable._hashTable.values():
-            print(x)
-
         # talvez precise passar a indentacao para o generate...
         for x in self._varTable._hashTable.values():
             codigoTranspilado.append( x.generateCCode(indent))
@@ -300,7 +296,7 @@ class IsiProgram():
         # cria arquivo com o codigo final
         filename = "results/" + outputname
 
-        print("Resultado salvo em: {}".format(filename))
+        print("Resultado salvo em: {}\n\n".format(filename))
         os.makedirs(os.path.dirname(filename), exist_ok=True)
 
         with open(filename, "w") as f:
