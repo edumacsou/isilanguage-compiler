@@ -45,7 +45,7 @@ Neste tópico, realizou-se a implementação de um analisador léxico, ou seja, 
   
 | Palavra Token                        | Correspondente                                        |
 |--------------------------------------|-------------------------------------------------------|
-| Palavras Reservadas                  | ```programa``` ```fimprog``` ```declare``` ```leia``` ```escreva``` ```se``` ```senao``` ```enquanto``` ```numero``` ```texto``` ```booleano``` ```print``` ```null``` |
+| Palavras Reservadas                  | ```programa``` ```fimprog``` ```declare``` ```leia``` ```escreva``` ```se``` ```senao``` ```enquanto``` ```numero``` ```texto``` ```booleano``` ```null``` |
 | Letra                                | ```(A..Z)``` ```(a..z)```                             |
 | Dígito                               | ```0..9```                                            |
 | Símbolo                              | ```ASCII de 32 a 126```                               |
