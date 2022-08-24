@@ -93,6 +93,124 @@ A construção do analisador semântico para a linguagem de programação até e
 
 <br />
 
+### • Transpilador de IsiLanguage  
+
+Um transpilador consiste no processo de tradução de um código fonte de um programa escrito em uma linguagem de programação como entrada, e produz como saída um novo código fonte equivalente em uma nova linguagem de programação, sendo esta diferente da entrada. 
+
+Dado tal contexto, foi implementado um transpilador de isiLanguage para C. Abaixo, segue alguns exemplos de tradução, comparando as supracitadas linguaguens:
+
+<br />
+
+- C (linguagem de programação):
+
+```c#
+#include <stdio.h>
+
+int main(){
+
+    printf("Olá mundo.");
+    return 0;
+}
+```
+
+- IsiLanguage (linguagem de programação):
+
+```js
+programa
+
+  escreva("Olá mundo.");
+
+fimprog;
+```
+
+<br />
+<br />
+
+- C (linguagem de programação):
+
+```c#
+#include <stdio.h>
+
+int main(){
+
+    int x = 20;
+    int y = 30;
+    int soma = 0;
+    
+    soma = x + y;
+    
+    printf(soma);
+    
+    return 0;
+}
+```
+
+- IsiLanguage (linguagem de programação):
+
+```js
+programa
+
+  numero x = 20;
+  numero y = 30;
+  numero soma = 0;
+  
+  soma = x + y;
+  
+  escreva(soma);
+
+fimprog;
+```
+
+<br />
+<br />
+
+- C (linguagem de programação):
+
+```c#
+#include <stdio.h>
+
+int main(){
+
+    int a, b;
+    
+    printf("Escreva o numero a:\n");
+    scanf("%d",&a);
+    printf("Escreva o numero a:\n");
+    scanf("%d",&b);
+    
+    if ( a > b ) {
+      printf(a);
+    }
+    else {
+      printf(b);
+    }
+    
+    return 0;
+}
+```
+
+- IsiLanguage (linguagem de programação):
+
+```js
+programa
+
+  numero a, b;
+  
+  escreva("Escreva o numero a:\n");
+  leia(a)
+  escreva("Escreva o numero b:\n");
+  leia(b)
+  
+  se ( a > b ) {
+    escreva(a);
+  }
+  senao {
+    escreva(b);
+  }
+
+fimprog;
+```
+
 # Componentes do Grupo
 
 | Nome do Integrante                    | Registro Acadêmico (RA)               | Github do Integrante                  |
@@ -102,5 +220,3 @@ A construção do analisador semântico para a linguagem de programação até e
 | Henrique Fantato Silva de Albuquerque | 21053916                              | https://github.com/henriquefsa98      |
 | Leonardo Vaz Lourenço                 | 11201811616                           | https://github.com/leowvazd           |
 | Saulo Jacção Rosa                     | 11063113                              | https://github.com/SauloJRosa         |
-
-<br />
