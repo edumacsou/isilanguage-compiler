@@ -16,11 +16,11 @@ java -jar "src\antlr-4.7.2-complete.jar" -Dlanguage=Python3 IsiLang.g4 -o src/pa
 
 <br />
 
-# Fases de Desenvolvimento (Working...)
+# Fases de Desenvolvimento
 
-A tabela abaixo retrata as instruções para a entrega do projeto:
+As tabelas abaixo retratam as instruções para a entrega do projeto, onde a segunda tabela demonstra especificamente os itens considerados como elementos adicionais para o respectivo projeto:
 
-| Item                                                                            | Status     |
+| Item (descrição)                                                                | Status     |
 |---------------------------------------------------------------------------------|------------|
 | Possuir 2 tipos de dados (pelo menos 1 string)                                  | DONE       |
 | Possuir a instrução de decisão (if/else)                                        | DONE       |
@@ -32,24 +32,29 @@ A tabela abaixo retrata as instruções para a entrega do projeto:
 | Verificar se há variáveis declaradas e não utilizadas (warning)                 | DONE       |
 | Geração de pelo menos 1 linguagem destino (Python)                              | DONE       |
 
+| Item  (descrição)                                                                        | Status     |
+|------------------------------------------------------------------------------------------|------------|
+| Mais tipos de dados (booleano)                                                           | DONE       |
+| Inclusão de novos operadores (exponenciação, divisão inteira e resto da divisão inteira) | DONE       |
+
 <br />
 
-### • Analisador Léxico (Working...)
+### • Analisador Léxico
 
 Neste tópico, realizou-se a implementação de um analisador léxico, ou seja, o dicionário e o seu conjunto dos vocábulos para a linguagem determinada conforme demonstra a tabela a seguir:
   
 | Palavra Token                        | Correspondente                                        |
 |--------------------------------------|-------------------------------------------------------|
-| Palavras Reservadas                  | ```programa``` ```fimprog``` ```declare``` ```leia``` ```escreva``` ```se``` ```entao``` ```senao``` ```numero``` ```texto``` ```enquanto``` ```null``` |
+| Palavras Reservadas                  | ```programa``` ```fimprog``` ```declare``` ```leia``` ```escreva``` ```se``` ```senao``` ```enquanto``` ```numero``` ```texto``` ```booleano``` ```print``` ```null``` |
 | Letra                                | ```(A..Z)``` ```(a..z)```                             |
 | Dígito                               | ```0..9```                                            |
 | Símbolo                              | ```ASCII de 32 a 126```                               |
-| Operadores                           | ```+``` ```-``` ```*``` ```/``` ```=``` ```==``` ```!=``` ```>``` ```>=``` ```<``` ```<=``` |
+| Operadores                           | ```+``` ```-``` ```*``` ```/``` ```=``` ```==``` ```!=``` ```>``` ```>=``` ```<``` ```<=``` ```**``` ```%``` ```//``` |
 | Delimitadores                        | ```,``` ```;``` ```( )``` ```{ }```                   |
 
 <br />
 
-### • Analisador Sintático (Working...)
+### • Analisador Sintático
 
 O Analisador Sintático foi construído sob o Formalismo de Backus-Naur, ou seja, sem recursão à esquerda e composto de uma gramática livre de contexto para a linguagem modelada escolhida.
 
@@ -69,7 +74,7 @@ Dessa forma, e em sequência, segue algumas características e conscientização
 
 <br />
 
-### • Analisador Semântico (Working...)
+### • Analisador Semântico
 
 A construção do analisador semântico para a linguagem de programação até então elaborada seguiu de acordo com as seguintes características:
 
