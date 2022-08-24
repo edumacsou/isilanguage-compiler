@@ -1,0 +1,80 @@
+programa
+
+  numero a, b, c, d;
+  texto  t1, t2;
+  booleano x;
+
+  x = verdadeiro;
+
+  escreva("Escreva o numero a:\n");
+  leia(a);
+  escreva("Escreva o numero b");
+  leia(b);
+  escreva("Escreva o numero d");
+  leia(d);
+
+  d = d ** 2;
+  escreva("d ao quadrado:");
+  escreva(d);
+
+  d = d % 3;
+  escreva("d resto da divisao por 3:");
+  escreva(d);
+
+  t1 = "Meu Teste";
+  a = 1 + 2 * a;
+  c = 5.755;
+
+  escreva(t1);
+  escreva("Ola Mundo");
+
+  se(x == verdadeiro){
+      escreva(t1);
+      se(a < c){
+         escreva("a menor que c!");
+      }
+      senao{
+         escreva("c maior igual a A....");
+      }
+  }
+
+
+  se ( a > b ) {
+     escreva (a);
+  }
+  senao {
+     escreva (b);
+  }
+
+  enquanto (a<b) {
+     a = a + 1;
+     escreva(a);
+
+     se(a<b){
+         escreva("oi");
+     }
+     senao{
+         escreva("oi");
+     }
+
+     se(a > c){
+       escreva("a maior que c!");
+     }
+     senao{
+         se(t1 == "oi"){
+            escreva(t1);
+         }
+         escreva("teste");
+
+     }
+     enquanto(a < b){
+         a = a + 1;
+         escreva(b);
+     }   
+
+  }
+
+   
+  
+
+fimprog;

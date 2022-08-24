@@ -1,6 +1,6 @@
 # Compilador IsiLanguage
 
-O objetivo do presente projeto é desenvolver os aspectos práticos da IsiLanguage, que consiste em uma linguagem de programação imperativa muito próxima do Português estruturado, tratando-se de um compilador compilador para a linguagem IsiLanguage.
+O objetivo do presente projeto é desenvolver os aspectos práticos da IsiLanguage, que consiste em uma linguagem de programação imperativa muito próxima do Português estruturado, tratando-se de um compilador para a linguagem IsiLanguage.
 
 Tal trabalho foi realizado como Projeto Final para a disciplina de Compiladores, ministrada pelo Professor Dr. Francisco Isidro Massetto e, pertencente ao curso de Bacharelado em Ciência da Computação da Universidade Federal do ABC (UFABC).
 
@@ -8,7 +8,7 @@ Tal trabalho foi realizado como Projeto Final para a disciplina de Compiladores,
 
 # Execução do Código Fonte
 
-Para realizar a execução do compilador é necessário navegar até a pasta raíz do código (../app/src/) e executar o seguinte comando:
+Para realizar a execução do compilador é necessário navegar até a pasta raíz do código (../app/) e executar o seguinte comando:
 
 ```bash
 java -jar "src\antlr-4.7.2-complete.jar" -Dlanguage=Python3 IsiLang.g4 -o src/parser
@@ -217,7 +217,7 @@ fimprog;
 
 Por fim, segue o link do vídeo hospedado no Youtube explicando como está estruturado o projeto e quais foram as decisões tomadas na implementação do mesmo:
 
-Link: [www.youtube.com/...]
+Link: [https://youtu.be/7QRkCuHwWRg]
 
 <br />
 
@@ -230,3 +230,4 @@ Link: [www.youtube.com/...]
 | Henrique Fantato Silva de Albuquerque | 21053916                              | https://github.com/henriquefsa98      |
 | Leonardo Vaz Lourenço                 | 11201811616                           | https://github.com/leowvazd           |
 | Saulo Jacção Rosa                     | 11063113                              | https://github.com/SauloJRosa         |
+
