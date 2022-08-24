@@ -175,7 +175,7 @@ int main(){
     
     printf("Escreva o numero a:\n");
     scanf("%d",&a);
-    printf("Escreva o numero a:\n");
+    printf("Escreva o numero b:\n");
     scanf("%d",&b);
     
     if ( a > b ) {
