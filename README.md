@@ -217,7 +217,7 @@ fimprog;
 
 Por fim, segue o link do vídeo hospedado no Youtube explicando como está estruturado o projeto e quais foram as decisões tomadas na implementação do mesmo:
 
-Link: [https://youtu.be/7QRkCuHwWRg]
+Link: [https://youtu.be/WZAvakQACzk]
 
 <br />
 
