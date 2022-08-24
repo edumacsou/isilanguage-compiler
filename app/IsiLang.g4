@@ -71,9 +71,9 @@ declaravar :  tipo ID {
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
 if(self._isiProgram._varTable.exists(str(symbol.getName())) == False):
-     print("Simbolo adicionado: {}".format(symbol.getName()))
+     #print("Simbolo adicionado: {}".format(symbol.getName()))
      self._isiProgram._varTable.add(symbol)
-     print("symbol table:{}".format(self._isiProgram._varTable._hashTable))
+     #print("symbol table:{}".format(self._isiProgram._varTable._hashTable))
 else:
      raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
                     }
@@ -82,9 +82,9 @@ else:
 symbol = IsiVariable(self._ctx.getChild(-1), self.getTipo(), None, False)
 
 if(self._isiProgram._varTable.exists(str(symbol.getName())) == False):
-     print("Simbolo adicionado: {}".format(symbol.getName()))
+     #print("Simbolo adicionado: {}".format(symbol.getName()))
      self._isiProgram._varTable.add(symbol)
-     print("symbol table:{}".format(self._isiProgram._varTable._hashTable))
+     #print("symbol table:{}".format(self._isiProgram._varTable._hashTable))
 else:
      raise IsiSemanticException("Erro Semantico! A variavel {} ja existe, e nao pode ser declarada novamente!".format(symbol.getName()))
 }
@@ -160,7 +160,7 @@ self._stack[-1].append(cmd)
 
 invalidcmd : ID 
 {
-print("Comando nao reconhecido, subindo exception...")
+#print("Comando nao reconhecido, subindo exception...")
 raise IsiSemanticException("Erro Semantico! Comando {} nao reconhecido ou mal utilizado!".format(self._ctx.getChild(-1).getText()))   
 }            AP(ID | NUMBER | expr | termo | TEXT) FP SC
           ;
