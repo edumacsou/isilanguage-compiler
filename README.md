@@ -211,6 +211,16 @@ programa
 fimprog;
 ```
 
+<br />
+
+### • Youtube
+
+Por fim, segue o link do vídeo hospedado no Youtube explicando como está estruturado o projeto e quais foram as decisões tomadas na implementação do mesmo:
+
+Link: [www.youtube.com/...]
+
+<br />
+
 # Componentes do Grupo
 
 | Nome do Integrante                    | Registro Acadêmico (RA)               | Github do Integrante                  |
